@@ -3,6 +3,7 @@ package com.jmt.fsapp.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,10 +43,16 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn(etEmail.getText().toString(),etPassword.getText().toString());
+
             }
         });
 
-}
+    }
+
+    private void iniciarMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     public void signIn(String email, String password){
 
@@ -57,6 +64,7 @@ public class Login extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            iniciarMain();
 
                         } else {
                             // If sign in fails, display a message to the user.
