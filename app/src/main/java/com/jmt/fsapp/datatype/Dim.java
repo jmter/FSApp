@@ -1,8 +1,8 @@
 package com.jmt.fsapp.datatype;
 
 public class Dim {
-    int largo;
-    int ancho;
-    int altura;
-    int peso;
+    public int largo;
+    public int ancho;
+    public int altura;
+    public int peso;
 }

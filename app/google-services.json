@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "775371724038",
+    "project_id": "fsapp-b233f",
+    "storage_bucket": "fsapp-b233f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775371724038:android:c90e93f85a034efbecfa87",
+        "android_client_info": {
+          "package_name": "com.jmt.fsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775371724038-jajaibpe4tv0ur9lb85p27nb0l1itfpb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0DpF9PAbuZG65ocx-d14irsfLuGoTEHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775371724038-jajaibpe4tv0ur9lb85p27nb0l1itfpb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

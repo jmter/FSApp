@@ -1,8 +1,8 @@
 package com.jmt.fsapp.datatype;
 
 public class Hkm {
-    boolean horas;
-    int canth;
-    boolean km;
-    int canthm;
+    public boolean horas;
+    public int canth;
+    public boolean km;
+    public int canthm;
 }
