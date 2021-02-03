@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,7 +24,9 @@ public class Login extends AppCompatActivity {
     private FirebaseUser user;
     private EditText etEmail;
     private EditText etPassword;
+    private TextView textView1;
     private Button btLogin;
+    private Button btChUser;
 
     private static final String TAG = "LoginActivity";
 
@@ -31,8 +34,9 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        iniciarGrafico();
         mAuth = FirebaseAuth.getInstance();
+        iniciarGrafico();
+
 
 
 
@@ -41,7 +45,26 @@ public class Login extends AppCompatActivity {
         etEmail = findViewById(R.id.email);
         etPassword = findViewById(R.id.password);
         btLogin = findViewById(R.id.loginBT);
+        textView1 = findViewById(R.id.texto1);
+        btChUser = findViewById(R.id.chuserBT);
         if (VerificarLog()) {
+            etEmail.setText(user.getEmail());
+            etEmail.setInputType(0);
+            etPassword.setVisibility(View.GONE);
+            textView1.setText("Bienvenido!");
+            textView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            btChUser.setVisibility(View.VISIBLE);
+
+            btChUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();
+                    Log.i(TAG,String.valueOf(VerificarLog()));
+                    if (!VerificarLog()) {
+                        iniciarGrafico();
+                    }
+                }
+            });
             btLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -49,6 +72,12 @@ public class Login extends AppCompatActivity {
                 }
             });
         }else {
+            etEmail.setText("");
+            etEmail.setInputType(21);
+            etPassword.setVisibility(View.VISIBLE);
+            textView1.setText("Ingrese email y contrasena!");
+            textView1.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            btChUser.setVisibility(View.GONE);
             btLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
