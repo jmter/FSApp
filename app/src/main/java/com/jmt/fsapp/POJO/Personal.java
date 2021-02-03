@@ -18,5 +18,5 @@ public class Personal {
     private Date csalud;
     private Date cind;
     private Seccion seccion;
-
+    private String credencial; // Verificar si es necesario agregar tipo de dato
 }
