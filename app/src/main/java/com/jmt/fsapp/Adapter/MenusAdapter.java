@@ -25,10 +25,6 @@ public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewH
         this.menus = menus;
 
     }
-//    public Adapter(ArrayList<Menu> menus, Activity activity){
-//        this.activity = activity;
-//        this.menus = menus;
-//    }
 
     @NonNull
     @Override
@@ -42,7 +38,6 @@ public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewH
         Menus menu = menus.get(position);
 //        adapterViewHolder.imagen.setImageResource(masc.getFoto()); Queda reservaod para cuando se implemente cargar imagen nueva
         adapterViewHolder.nombre.setText(menu.getNombre());
-        Log.i("QueProblema",menu.getNombre());
         adapterViewHolder.layoutCV.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
