@@ -23,9 +23,11 @@
         android:ems="10"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:gravity="center_horizontal" />
 
     <EditText
+
         android:id="@+id/password"
         android:textAlignment="center"
         android:layout_width="match_parent"
@@ -33,7 +35,8 @@
         android:ems="10"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:gravity="center_horizontal" />
 
     <Button
         android:id="@+id/loginBT"

@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Equipo {
+
     private int id;
     private String nombre;
     private String marca;
@@ -14,5 +15,10 @@ public class Equipo {
     private Hkm hkm;
     private Dim dim;
     private ArrayList<String> neumatico;
+    private ArrayList<ParteMaquina> reportes;
+
+    public Equipo() {
+    }
+
 
 }

@@ -55,14 +55,14 @@ public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewH
 
         private ImageView imagen;
         private TextView nombre;
-        private LinearLayout layoutCV;
+        private ConstraintLayout layoutCV;
 
 
         public AdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             imagen  = (ImageView) itemView.findViewById(R.id.imageMenu);
             nombre  = (TextView) itemView.findViewById(R.id.nombreMenu);
-            layoutCV  = (LinearLayout) itemView.findViewById(R.id.layoutCV);
+            layoutCV  = (ConstraintLayout) itemView.findViewById(R.id.layoutCV);
 
         }
     }

@@ -3,6 +3,8 @@ package com.jmt.fsapp.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuAdapter;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +13,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("OnCReate","LLegue a ONCREATE");
                 obtenerMenus();
                 iniciarGrafico();
             }
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void iniciarGrafico(){
+        Log.i("OnCReate","LLegue a IniciarGraf");
         logoutBT = findViewById(R.id.logoutBT);
         textActionBar = findViewById(R.id.textView);
         menuRV = findViewById(R.id.menuRV);
@@ -74,24 +80,27 @@ public class MainActivity extends AppCompatActivity {
                 logOut();
             }
         });
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        menuRV.setLayoutManager(llm);
+        GridLayoutManager gridLayoutManagerm = new GridLayoutManager(this,2);
+        menuRV.setLayoutManager(gridLayoutManagerm);
         iniciarAdaptador();
     }
     private void logOut(){
         mAuth.signOut();
         Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
         finish();
+        startActivity(intent);
+
     }
     private void loadUser(){
 
     }
     public void iniciarAdaptador(){
+        Log.i("OnCReate","LLegue a Adapt");
         MenusAdapter adaptador = new MenusAdapter(menus);
         menuRV.setAdapter(adaptador);
     }
     public void obtenerMenus(){
+        Log.i("OnCReate","LLegue a ObtenerMenu");
         menus = db.obtenerMenus();
 
 
