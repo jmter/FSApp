@@ -1,5 +1,7 @@
 package com.jmt.fsapp.Constructors;
 
+import android.app.Activity;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,15 +21,20 @@ public class ConstructorFB implements Constructor {
     private DatabaseReference mdataBase;
     private ArrayList<Menus> menus = new ArrayList();
     private RecyclerView menuRV;
+    Activity activity;
+    MenusAdapter adaptador;
 
+    //Constructores
     public ConstructorFB() {
     }
 
-    public ConstructorFB(RecyclerView menuRV) {
+    public ConstructorFB(RecyclerView menuRV, Activity activity) {
         this.menuRV = menuRV;
+        this.activity = activity;
+        adaptador = new MenusAdapter(menus,activity);
     }
 
-    //Devuelve un array con los objetos Menu de la base de datos
+    //Metodos interfaz
     public void loadMenus(){
         mdataBase = FirebaseDatabase.getInstance().getReference().child("Menus");
         mdataBase.addValueEventListener(new ValueEventListener() {
@@ -36,9 +43,9 @@ public class ConstructorFB implements Constructor {
                 if(snapshot.exists()) {
                     menus.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        menus.add(new Menus(ds.child("Name").getValue().toString(), ds.child("Intent").getValue().toString()));
+                        menus.add(new Menus(ds.child("Name").getValue().toString(),ds.child("Imagen").getValue().toString(),ds.child("Intent").getValue().toString()));
                     }
-                    MenusAdapter adaptador = new MenusAdapter(menus);
+                    adaptador.setMenus(menus);
                     menuRV.setAdapter(adaptador);
 
                 }
@@ -55,13 +62,11 @@ public class ConstructorFB implements Constructor {
 
         return personal;
     }
-    public void modifieUser(Personal personal){
-
-    }
+    public void modifieUser(Personal personal){    }
     public Equipo obtEquipo(){
         Equipo equipo = new Equipo();
         return equipo;
     }
-    public void modiefieEquipo(Equipo equipo){}
+    public void modiefieEquipo(Equipo equipo){    }
 }
 

@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.jmt.fsapp.Constructors.Constructor;
 import com.jmt.fsapp.Constructors.ConstructorFB;
 import com.jmt.fsapp.POJO.Menus;
 import com.jmt.fsapp.R;
@@ -40,7 +42,10 @@ public class MainActivity extends AppCompatActivity  {
         mAuth = FirebaseAuth.getInstance();
 
         iniciarGrafico();
-        new ConstructorFB(menuRV).loadMenus();
+
+        //Carga los menus
+        new ConstructorFB(menuRV, this).loadMenus();
+
 
 
     }

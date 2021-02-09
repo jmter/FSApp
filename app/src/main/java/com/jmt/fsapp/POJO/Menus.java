@@ -16,6 +16,12 @@ public class Menus {
         this.intent = intent;
     }
 
+    public Menus(String nombre, String imagen, String intent) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.intent = intent;
+    }
+
     @NonNull
     @Override
     public String toString() {

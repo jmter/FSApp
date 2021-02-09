@@ -1,5 +1,6 @@
 package com.jmt.fsapp.Adapter;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.jmt.fsapp.Activities.MainActivity;
 import com.jmt.fsapp.POJO.Menus;
 import com.jmt.fsapp.R;
 
@@ -20,10 +23,16 @@ import java.util.ArrayList;
 
 public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewHolder> {
     private ArrayList<Menus> menus;
+    private Activity activity;
 
-    public MenusAdapter(ArrayList<Menus> menus){
+    public MenusAdapter(ArrayList<Menus> menus ,Activity activity){
         this.menus = menus;
+        this.activity = activity;
 
+    }
+
+    public void setMenus(ArrayList<Menus> menus) {
+        this.menus = menus;
     }
 
     @NonNull
@@ -36,7 +45,7 @@ public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewH
     @Override
     public void onBindViewHolder(@NonNull final AdapterViewHolder adapterViewHolder, int position) {
         Menus menu = menus.get(position);
-//        adapterViewHolder.imagen.setImageResource(masc.getFoto()); Queda reservaod para cuando se implemente cargar imagen nueva
+        Glide.with(activity).load(menu.getImagen()).into(adapterViewHolder.imagen);
         adapterViewHolder.nombre.setText(menu.getNombre());
         adapterViewHolder.layoutCV.setOnClickListener(new View.OnClickListener() {
               @Override
