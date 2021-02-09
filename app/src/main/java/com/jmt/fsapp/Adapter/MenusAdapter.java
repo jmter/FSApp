@@ -1,6 +1,7 @@
 package com.jmt.fsapp.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.jmt.fsapp.Activities.Login;
 import com.jmt.fsapp.Activities.MainActivity;
 import com.jmt.fsapp.POJO.Menus;
 import com.jmt.fsapp.R;
@@ -44,13 +46,22 @@ public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewH
 
     @Override
     public void onBindViewHolder(@NonNull final AdapterViewHolder adapterViewHolder, int position) {
-        Menus menu = menus.get(position);
+        final Menus menu = menus.get(position);
         Glide.with(activity).load(menu.getImagen()).into(adapterViewHolder.imagen);
         adapterViewHolder.nombre.setText(menu.getNombre());
         adapterViewHolder.layoutCV.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-               //Aca va lo que hace cuando clickeas el menu
+                  Intent intent = null;
+                  try {
+                      intent = new Intent(activity, Class.forName(menu.getIntent()));
+
+                  } catch (ClassNotFoundException e) {
+                  }
+                  if (intent != null){
+                      activity.finish();
+                      activity.startActivity(intent);
+                  }
               }
           });
 
