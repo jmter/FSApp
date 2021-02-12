@@ -30,23 +30,14 @@ public class MainActivity extends AppCompatActivity  {
     private ArrayList<Menus> menus = new ArrayList();
     private DatabaseReference mDatabase;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-
         iniciarGrafico();
-
         //Carga los menus
         new ConstructorFB(menuRV, this).loadMenus();
-
-
 
     }
     private void iniciarGrafico(){

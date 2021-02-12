@@ -1,5 +1,7 @@
 package com.jmt.fsapp.Constructors;
 
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jmt.fsapp.Activities.InformacionPersonal;
 import com.jmt.fsapp.Adapter.MenusAdapter;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.POJO.Menus;
@@ -22,7 +25,8 @@ public interface Constructor {
 
 
     void loadMenus();
-    Personal loadUser();
+    void loadBv(TextView textView);
+    void loadUser(InformacionPersonal informacionPersonal);
     void modifieUser(Personal personal);
     Equipo obtEquipo();
     void modiefieEquipo(Equipo equipo);
