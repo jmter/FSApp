@@ -1,27 +1,63 @@
 package com.jmt.fsapp.POJO;
 
 import com.jmt.fsapp.datatype.Cid;
+import com.jmt.fsapp.datatype.Csalud;
+import com.jmt.fsapp.datatype.Fecha;
 import com.jmt.fsapp.datatype.LicienciaC;
 import com.jmt.fsapp.datatype.Seccion;
-
-import java.util.Date;
 
 public class Personal {
     private String nombre;
     private String apellido;
+    private String picture;
+    private String domicilio;
     private String usuario;
+    private Fecha ingreso;
     private int acceso;
-    private Date nacimiento;
-    private Cid cid;
+    private Fecha nacimiento;
+    private Cid cid = new Cid();
     private String telefono;
-    private LicienciaC licienciaC;
-    private Date csalud;
-    private Date cind;
+    private LicienciaC licienciaC = new LicienciaC();
+    private String categoria;
+    private Csalud csalud = new Csalud();
+    private Fecha cind;
     private Seccion seccion;
     private String credencial; // Verificar si es necesario agregar tipo de dato
 
     public Personal() {
 
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Fecha getIngreso() {
+        return ingreso;
+    }
+
+    public void setIngreso(Fecha ingreso) {
+        this.ingreso = ingreso;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
     }
 
     public String getNombre() {
@@ -56,11 +92,11 @@ public class Personal {
         this.acceso = acceso;
     }
 
-    public Date getNacimiento() {
+    public Fecha getNacimiento() {
         return nacimiento;
     }
 
-    public void setNacimiento(Date nacimiento) {
+    public void setNacimiento(Fecha nacimiento) {
         this.nacimiento = nacimiento;
     }
 
@@ -72,6 +108,31 @@ public class Personal {
         this.cid = cid;
     }
 
+    public void setCidnumero(String cidnumero){
+        this.cid.numero = cidnumero;
+    }
+
+    public void setCidvenc(Fecha cidvenc){
+        this.cid.venc = cidvenc;
+    }
+    public void setCSvenc(Fecha cSvenc){
+        this.csalud.venc = cSvenc;
+    }
+    public void setLCvenc(Fecha lCvenc){
+        this.licienciaC.venc = lCvenc;
+    }
+    public void setLCcategoria(String lCcategoria){
+        this.licienciaC.cat = lCcategoria;
+    }
+    public void setCidimagen(String cidimagen){
+        this.cid.imagen = cidimagen;
+    }
+    public void setLCimagen(String lCimagen){
+        this.licienciaC.imagen = lCimagen;
+    }
+    public void setCSimagen(String cSimagen){
+        this.csalud.imagen = cSimagen;
+    }
     public String getTelefono() {
         return telefono;
     }
@@ -88,19 +149,19 @@ public class Personal {
         this.licienciaC = licienciaC;
     }
 
-    public Date getCsalud() {
+    public Csalud getCsalud() {
         return csalud;
     }
 
-    public void setCsalud(Date csalud) {
+    public void setCsalud(Csalud csalud) {
         this.csalud = csalud;
     }
 
-    public Date getCind() {
+    public Fecha getCind() {
         return cind;
     }
 
-    public void setCind(Date cind) {
+    public void setCind(Fecha cind) {
         this.cind = cind;
     }
 

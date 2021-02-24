@@ -1,7 +1,6 @@
 package com.jmt.fsapp.datatype;
 
-public class Cid {
-    public String numero;
+public class Csalud {
     public Fecha venc;
     public String imagen;
 }

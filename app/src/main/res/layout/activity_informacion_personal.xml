@@ -1,482 +1,520 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.InformacionPersonal">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    tools:context=".Activities.InformacionPersonal"
+    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="Informacion Personal"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="650dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        android:layout_height="650dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <EditText
-                android:id="@+id/eTnumerodecedula"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:focusable="false"
-                android:textColor="@color/colorPrimary"
-                android:enabled="false"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/tVnumerocedula"
-                app:layout_constraintStart_toStartOf="@+id/eTvencimientocedula"
-                app:layout_constraintTop_toTopOf="@+id/tVnumerocedula" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="24dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/perfil"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="Informacion Personal"
+                        android:textSize="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tVnombre"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/picture"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/perfil"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/picture"
+                    app:layout_constraintStart_toStartOf="@+id/picture"
+                    app:layout_constraintTop_toBottomOf="@+id/picture">
+
+                    <Button
+                        android:id="@+id/agregarpicture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Agregar"
+                        android:visibility="gone"/>
+
+                    <Button
+                        android:id="@+id/rotarpicture"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rotar"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usuario"/>
+                <Spinner
+                    android:id="@+id/usuariosSP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVnombre"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="Nombre" />
+                <EditText
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/eTnombre"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVapellidos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Apellidos" />
+                <EditText
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/etapellidos"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:inputType="text"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVdomicilio"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Domicilio" />
+
+                <EditText
+                    android:id="@+id/eTdomicilio"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tVfechadenacimiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Fecha de nacimiento" />
+                <EditText
+                    android:id="@+id/eTfechadenacimiento"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:inputType="text"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVtelefono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Telefono" />
+                <EditText
+                    android:id="@+id/eTtelefono"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVfechadeingreso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Fecha de ingreso" />
+                <EditText
+                    android:id="@+id/eTfechadeingreso"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVseccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Seccion" />
+                <EditText
+                    android:id="@+id/eTseccion"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVcategoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Categoria" />
+                <EditText
+                    android:id="@+id/eTCategoria"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVcredencial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Credencial" />
+                <EditText
+                    android:id="@+id/eTcredencial"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tVcharladeinduccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Charla de induccion" />
+
+                <EditText
+                    android:id="@+id/eTcharladeinduccion"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text"/>
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Cedula de Identidad"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tVnumerocedula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="N°"
+                    android:layout_marginLeft="20dp" />
+
+                <EditText
+                    android:id="@+id/eTnumerodecedula"
+                    android:layout_width="120dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="@id/tVnumerocedula"
+                    app:layout_constraintBottom_toBottomOf="@id/tVnumerocedula"
+                    app:layout_constraintStart_toEndOf="@+id/tVnumerocedula"
+                    android:inputType="text"
+                    android:layout_marginLeft="20dp" />
+                <TextView
+                    android:id="@+id/tVvencimientocedula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tVnumerocedula"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Venc." />
+                <EditText
+                    android:id="@+id/eTvencimientocedula"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintTop_toTopOf="@id/tVvencimientocedula"
+                    app:layout_constraintBottom_toBottomOf="@+id/tVvencimientocedula"
+                    app:layout_constraintStart_toEndOf="@+id/tVvencimientocedula"
+                    android:inputType="text"
+                    android:layout_marginLeft="20dp" />
+                <TextView
+                    android:id="@+id/tVcategorialicenciadeconducir"
+                    app:layout_constraintTop_toBottomOf="@id/tVvencimientocedula"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Categoria" />
+
+                <EditText
+                    android:id="@+id/eTcategorialicenciadeconducir"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:cursorVisible="false"
+                    android:layout_marginStart="20dp"
+                    android:inputType="text"
+                    app:layout_constraintStart_toEndOf="@id/tVcategorialicenciadeconducir"
+                    app:layout_constraintTop_toTopOf="@id/tVcategorialicenciadeconducir"
+                    app:layout_constraintBottom_toBottomOf="@id/tVcategorialicenciadeconducir"
+                    android:layout_marginLeft="20dp" />
+                <ImageView
+                    android:id="@+id/iVcedula"
+                    android:layout_width="180dp"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/textView7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/cedula" />
+
+                <Button
+                    android:id="@+id/agregarCI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar"
+                    app:layout_constraintStart_toStartOf="@+id/iVcedula"
+                    app:layout_constraintTop_toBottomOf="@+id/iVcedula"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/rotarCI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rotar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/agregarCI"
+                    app:layout_constraintTop_toBottomOf="@+id/iVcedula"
+                    android:visibility="gone"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textView12"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Licencia de conducir" />
+                <TextView
+                    android:id="@+id/tVvencimientolicienciadeconducir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView12"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="Venc"
+                    android:layout_marginLeft="20dp" />
+                <EditText
+                    android:id="@+id/eTvencimientolicenciadeconducir"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintTop_toTopOf="@id/tVvencimientolicienciadeconducir"
+                    app:layout_constraintBottom_toBottomOf="@id/tVvencimientolicienciadeconducir"
+                    app:layout_constraintStart_toEndOf="@id/tVvencimientolicienciadeconducir"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="text" />
+                <ImageView
+                    android:id="@+id/iVlicenciadeconducir"
+                    android:layout_width="180dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/textView12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/libreta" />
+
+                <Button
+                    android:id="@+id/agregarLC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/rotarLC"
+                    app:layout_constraintStart_toStartOf="@+id/iVlicenciadeconducir"
+                    app:layout_constraintTop_toBottomOf="@+id/iVlicenciadeconducir" />
+
+                <Button
+                    android:id="@+id/rotarLC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rotar"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/iVlicenciadeconducir"
+                    app:layout_constraintTop_toBottomOf="@+id/iVlicenciadeconducir" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textView15"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Carne de salud" />
+                <TextView
+                    android:id="@+id/tVvencimientocarnedesalud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15"
+                    android:text="Venc."
+                    android:layout_marginStart="20dp" />
+                <EditText
+                    android:id="@+id/eTvencimientocarnedesalud"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    app:layout_constraintTop_toTopOf="@id/tVvencimientocarnedesalud"
+                    app:layout_constraintBottom_toBottomOf="@id/tVvencimientocarnedesalud"
+                    app:layout_constraintStart_toEndOf="@id/tVvencimientocarnedesalud"
+                    android:inputType="text"/>
+
+                <ImageView
+                    android:id="@+id/iVcarnedesalud"
+                    android:layout_width="180dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="20dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/libreta"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView15" />
+
+                <Button
+                    android:id="@+id/agregarCS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar"
+                    app:layout_constraintStart_toStartOf="@+id/iVcarnedesalud"
+                    app:layout_constraintTop_toBottomOf="@+id/iVcarnedesalud"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/rotarCS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="Rotar"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/iVcarnedesalud"
+                    app:layout_constraintStart_toEndOf="@+id/agregarCS"
+                    app:layout_constraintTop_toBottomOf="@+id/iVcarnedesalud" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/guardar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
-                android:text="Nombre"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-            <EditText
-                android:id="@+id/eTnombre"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginBottom="3dp"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/tVnombre"
-                app:layout_constraintStart_toEndOf="@+id/tVnombre"
-                app:layout_constraintTop_toTopOf="@+id/tVnombre" />
-
-            <TextView
-                android:id="@+id/tVapellidos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Apellidos"
-                app:layout_constraintStart_toStartOf="@+id/tVnombre"
-                app:layout_constraintTop_toBottomOf="@+id/tVnombre" />
-
-            <EditText
-                android:id="@+id/etapellidos"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:inputType="none"
-                android:textColor="@color/colorPrimary"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                android:layout_marginBottom="3dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tVapellidos"
-                app:layout_constraintStart_toEndOf="@+id/tVapellidos"
-                app:layout_constraintTop_toTopOf="@+id/tVapellidos" />
-
-            <TextView
-                android:id="@+id/tVdomicilio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Domicilio"
-                app:layout_constraintStart_toStartOf="@+id/tVnombre"
-                app:layout_constraintTop_toBottomOf="@+id/tVapellidos" />
-
-            <EditText
-                android:id="@+id/eTdomicilio"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:textColor="@color/colorPrimary"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                android:layout_marginBottom="3dp"
-                android:inputType="none"
-                app:layout_constraintBottom_toBottomOf="@+id/tVdomicilio"
-                app:layout_constraintStart_toEndOf="@+id/tVdomicilio"
-                app:layout_constraintTop_toTopOf="@+id/tVdomicilio" />
-
-            <TextView
-                android:id="@+id/tVfechadenacimiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Fecha de nacimiento"
-                app:layout_constraintStart_toStartOf="@+id/tVnombre"
-                app:layout_constraintTop_toBottomOf="@+id/tVdomicilio" />
-
-            <EditText
-                android:id="@+id/eTfechadenacimiento"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:textColor="@color/colorPrimary"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                android:layout_marginBottom="3dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tVfechadenacimiento"
-                app:layout_constraintStart_toEndOf="@+id/tVfechadenacimiento"
-                app:layout_constraintTop_toTopOf="@+id/tVfechadenacimiento" />
-
-            <TextView
-                android:id="@+id/tVtelefono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Telefono"
-                app:layout_constraintStart_toStartOf="@+id/tVfechadenacimiento"
-                app:layout_constraintTop_toBottomOf="@+id/tVfechadenacimiento" />
-
-            <TextView
-                android:id="@+id/tVfechadeingreso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Fecha de ingreso"
-                app:layout_constraintStart_toStartOf="@+id/tVcharladeinduccion"
-                app:layout_constraintTop_toBottomOf="@+id/tVcharladeinduccion" />
-
-            <TextView
-                android:id="@+id/tVseccion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Seccion"
-                app:layout_constraintStart_toStartOf="@+id/tVfechadeingreso"
-                app:layout_constraintTop_toBottomOf="@+id/tVfechadeingreso" />
-
-            <TextView
-                android:id="@+id/tVcategoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Categoria"
-                app:layout_constraintStart_toStartOf="@+id/tVseccion"
-                app:layout_constraintTop_toBottomOf="@+id/tVseccion" />
-
-            <TextView
-                android:id="@+id/tVcredencial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Credencial"
-                app:layout_constraintStart_toStartOf="@+id/tVcategoria"
-                app:layout_constraintTop_toBottomOf="@+id/tVcategoria" />
-
-            <EditText
-                android:id="@+id/eTtelefono"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:textColor="@color/colorPrimary"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                android:layout_marginBottom="3dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tVtelefono"
-                app:layout_constraintStart_toEndOf="@+id/tVtelefono"
-                app:layout_constraintTop_toTopOf="@+id/tVtelefono" />
-
-            <TextView
-                android:id="@+id/tVcharladeinduccion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:text="Charla de induccion"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tVtelefono" />
-
-            <EditText
-                android:id="@+id/eTcharladeinduccion"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="3dp"
-                android:focusable="false"
-                android:textColor="@color/colorPrimary"
-                android:enabled="false"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/tVcharladeinduccion"
-                app:layout_constraintStart_toEndOf="@+id/tVcharladeinduccion"
-                app:layout_constraintTop_toTopOf="@+id/tVcharladeinduccion" />
-
-            <EditText
-                android:id="@+id/eTfechadeingreso"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="3dp"
-                android:focusable="false"
-                android:textColor="@color/colorPrimary"
-                android:enabled="false"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/tVfechadeingreso"
-                app:layout_constraintStart_toEndOf="@+id/tVfechadeingreso"
-                app:layout_constraintTop_toTopOf="@+id/tVfechadeingreso"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <EditText
-                android:id="@+id/eTseccion"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:focusable="false"
-                android:enabled="false"
-                android:textColor="@color/colorPrimary"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/tVseccion"
-                app:layout_constraintStart_toEndOf="@+id/tVseccion"
-                app:layout_constraintTop_toTopOf="@+id/tVseccion"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <EditText
-                android:id="@+id/eTCategoria"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="16dp"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/tVcategoria"
-                app:layout_constraintStart_toEndOf="@+id/tVcategoria"
-                app:layout_constraintTop_toTopOf="@+id/tVcategoria"
-                app:layout_constraintVertical_bias="0.642" />
-
-            <EditText
-                android:id="@+id/eTcredencial"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/colorPrimary"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/tVcredencial"
-                app:layout_constraintStart_toEndOf="@+id/tVcredencial"
-                app:layout_constraintTop_toTopOf="@+id/tVcredencial"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Cedula de Identidad"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tVcredencial" />
-
-            <TextView
-                android:id="@+id/tVnumerocedula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="N°"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-            <EditText
-                android:id="@+id/eTcategorialicenciadeconducir"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/eTvencimientolicenciadeconducir"
-                app:layout_constraintTop_toBottomOf="@+id/eTvencimientolicenciadeconducir" />
-
-            <TextView
-                android:id="@+id/tVvencimientocedula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Venc."
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tVnumerocedula" />
-
-            <EditText
-                android:id="@+id/eTvencimientocedula"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="20dp"
-                android:focusable="false"
-                android:textColor="@color/colorPrimary"
-                android:enabled="false"
-                android:cursorVisible="false"
-                android:layout_marginLeft="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tVvencimientocedula"
-                app:layout_constraintStart_toEndOf="@+id/tVvencimientocedula"
-                app:layout_constraintTop_toTopOf="@+id/tVvencimientocedula" />
-
-            <ImageView
-                android:id="@+id/iVcedula"
-                android:layout_width="180dp"
-                android:layout_height="110dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/cedula"
-                app:layout_constraintStart_toEndOf="@+id/eTcategorialicenciadeconducir"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Licencia de conducir"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iVcedula" />
-
-            <TextView
-                android:id="@+id/tVvencimientolicienciadeconducir"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="48dp"
-                android:text="Venc."
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-            <TextView
-                android:id="@+id/tVcategorialicenciadeconducir"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:text="Cat"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/eTcategorialicenciadeconducir" />
-
-            <EditText
-                android:id="@+id/eTvencimientolicenciadeconducir"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:focusable="false"
-                android:enabled="false"
-                android:cursorVisible="false"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/tVvencimientolicienciadeconducir"
-                app:layout_constraintStart_toEndOf="@+id/tVvencimientolicienciadeconducir"
-                app:layout_constraintTop_toTopOf="@+id/tVvencimientolicienciadeconducir" />
-
-            <ImageView
-                android:id="@+id/iVlicenciadeconducir"
-                android:layout_width="180dp"
-                android:layout_height="110dp"
-                android:layout_marginStart="129dp"
-                android:layout_marginLeft="129dp"
-                android:layout_marginTop="10dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/libreta"
-                app:layout_constraintStart_toStartOf="@+id/eTCategoria"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Carne de salud"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iVlicenciadeconducir" />
-
-            <TextView
-                android:id="@+id/tVvencimientocarnedesalud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Venc."
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/eTvencimientocarnedesalud" />
-
-            <EditText
-                android:id="@+id/eTvencimientocarnedesalud"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:focusable="false"
-                android:enabled="false"
-                android:textColor="@color/colorPrimary"
-                android:cursorVisible="false"
-                app:layout_constraintBottom_toBottomOf="@+id/iVcarnedesalud"
-                app:layout_constraintStart_toEndOf="@+id/tVvencimientocarnedesalud"
-                app:layout_constraintTop_toTopOf="@+id/iVcarnedesalud" />
-
-            <ImageView
-                android:id="@+id/iVcarnedesalud"
-                android:layout_width="180dp"
-                android:layout_height="110dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/libreta"
-                app:layout_constraintStart_toStartOf="@+id/iVlicenciadeconducir"
-                app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:text="Guardar"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </LinearLayout>
 
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
