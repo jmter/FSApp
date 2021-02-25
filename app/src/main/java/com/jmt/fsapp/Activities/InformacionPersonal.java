@@ -33,6 +33,11 @@ import com.jmt.fsapp.R;
 import com.jmt.fsapp.datatype.Fecha;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InformacionPersonal extends AppCompatActivity {
     private Toolbar toolbar;
@@ -52,8 +57,8 @@ public class InformacionPersonal extends AppCompatActivity {
         setContentView(R.layout.activity_informacion_personal);
         iniciarGraficos();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        mdataBase = FirebaseDatabase.getInstance().getReference().child("Usuarios");
         loadDB();
-
     }
 
 
@@ -90,6 +95,16 @@ public class InformacionPersonal extends AppCompatActivity {
         guardar = findViewById(R.id.guardar);
         usuarios = findViewById(R.id.usuariosSP);
         cargarEditTexts();
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(Personal personal: personals){
+                    if(personal.getUsuario().equals(usuarios.getSelectedItem().toString())){
+                        subirInfo(gurdarInfo(personal));
+                    }
+                }
+            }
+        });
         for(EditText et: editTexts){
             et.setFocusable(false);
             et.setEnabled(false);
@@ -105,7 +120,7 @@ public class InformacionPersonal extends AppCompatActivity {
         telefono.setText(personal.getTelefono());
        // charlainduc.setText(personal.getCind().toString());
         fechaingreso.setText(personal.getIngreso().toString());
-       // seccion.setText(personal.getSeccion().toString());
+        seccion.setText(personal.getSeccion());
         categoria.setText(personal.getCategoria());
         credencial.setText(personal.getCredencial());
         numCI.setText(personal.getCid().numero);
@@ -118,10 +133,8 @@ public class InformacionPersonal extends AppCompatActivity {
         Glide.with(activity).load(personal.getCsalud().imagen).into(cs);
         Glide.with(activity).load(personal.getPicture()).into(pict);
     }
-
     //Metodo que carga el array personals con la info de los usuarios
     private void loadDB(){
-        mdataBase = FirebaseDatabase.getInstance().getReference().child("Usuarios");
         mdataBase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -149,6 +162,7 @@ public class InformacionPersonal extends AppCompatActivity {
             Personal personal = new Personal();
             ;
             try {
+                personal.setReference(ds.getRef());
                 personal.setUsuario(ds.child("Usuario").getValue().toString());
                 personal.setNombre(ds.child("Nombre").getValue().toString());
                 personal.setApellido(ds.child("Apellido").getValue().toString());
@@ -157,7 +171,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 personal.setTelefono(ds.child("Telefono").getValue().toString());
                 //personal.setCind(new Fecha(Integer.parseInt(ds.child("CInd").child("Dia").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Mes").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Ano").getValue().toString())));
                 personal.setIngreso(new Fecha(Integer.parseInt(ds.child("Ingreso").child("Dia").getValue().toString()),Integer.parseInt(ds.child("Ingreso").child("Mes").getValue().toString()),Integer.parseInt(ds.child("Ingreso").child("Ano").getValue().toString())));
-                //personal.setSeccion(ds.child("Seccion").getValue().toString());
+                personal.setSeccion(ds.child("Seccion").getValue().toString());
                 personal.setCategoria(ds.child("Categoria").getValue().toString());
                 personal.setCredencial(ds.child("Credencial").getValue().toString());
                 personal.setCidnumero(ds.child("CI").child("Numero").getValue().toString());
@@ -177,7 +191,6 @@ public class InformacionPersonal extends AppCompatActivity {
         }
         return users;
     }
-
     //Metodo que carga el listado de usuarios
     private void loadUsers(ArrayList<Personal> snapshot){
         ArrayList<String> users = new ArrayList<>();
@@ -204,7 +217,6 @@ public class InformacionPersonal extends AppCompatActivity {
             }
         });
     }
-
     //Implementaciones del menu overflow
     private void editarInfo(){
         for(EditText et: editTexts){
@@ -249,9 +261,6 @@ public class InformacionPersonal extends AppCompatActivity {
         editTexts.add(vencLC);
 
     }
-
-
-
     //Metodos del menu overflow
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menuoverflow,menu);
@@ -271,7 +280,6 @@ public class InformacionPersonal extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     //Inicializar DatePciker
     public void iniciarDatePicker(){
         fechanac.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +288,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 DatePickerDialog datePickerDialog1 = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        fechanac.setText(dayOfMonth+"/"+month+"/"+year);
+                        fechanac.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
                 },1980,1,1);
                 datePickerDialog1.show();
@@ -292,9 +300,9 @@ public class InformacionPersonal extends AppCompatActivity {
                 DatePickerDialog datePickerDialog2 = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        fechanac.setText(dayOfMonth+"/"+month+"/"+year);
+                        fechaingreso.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
-                },1980,1,1);
+                },2021,1,1);
                 datePickerDialog2.show();
             }
         });
@@ -305,9 +313,9 @@ public class InformacionPersonal extends AppCompatActivity {
                 DatePickerDialog datePickerDialog3 = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        fechanac.setText(dayOfMonth+"/"+month+"/"+year);
+                        vencCI.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
-                },1980,1,1);
+                },2021,1,1);
                 datePickerDialog3.show();
             }
         });
@@ -318,9 +326,9 @@ public class InformacionPersonal extends AppCompatActivity {
                         = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        fechanac.setText(dayOfMonth+"/"+month+"/"+year);
+                        vencLC.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
-                },1980,1,1);
+                },2021,1,1);
                 datePickerDialog4.show();
             }
         });
@@ -330,7 +338,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 DatePickerDialog datePickerDialog5 = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        fechanac.setText(dayOfMonth+"/"+month+"/"+year);
+                        vencCS.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
                 },1980,1,1);
                 datePickerDialog5.show();
@@ -338,4 +346,51 @@ public class InformacionPersonal extends AppCompatActivity {
         });
 
     }
+    //Obtiene los datos de los cuadros y los modifica de un personal existente
+    public Personal gurdarInfo(Personal personal){
+        personal.setNombre(nombre.getText().toString());
+        personal.setApellido(apellido.getText().toString());
+        personal.setDomicilio(domicilio.getText().toString());
+        personal.setNacimiento(fechanac.getText().toString());
+        personal.setTelefono(telefono.getText().toString());
+        personal.setIngreso(fechaingreso.getText().toString());
+        personal.setSeccion(seccion.getText().toString());
+        personal.setCategoria(categoria.getText().toString());
+        personal.setCredencial(credencial.getText().toString());
+        personal.setCid(vencCI.getText().toString(),numCI.getText().toString(),personal.getCid().imagen);//Falta  implementar la imagen
+        personal.setLicienciaC(vencLC.getText().toString(),catLC.getText().toString(),personal.getLicienciaC().imagen);//Falta  implementar la imagen
+        personal.setCsalud(vencCS.getText().toString(),personal.getCsalud().imagen);
+        return personal;
+    }
+    //A partir de un objeto tipor Personal lo actualiza en la nube
+    public void subirInfo(Personal personal){
+        Map<String, Object> personalReload = new HashMap<>();
+        personalReload.put("Nombre",personal.getNombre());
+        personalReload.put("Apellido",personal.getApellido());
+        personalReload.put("Domicilio",personal.getDomicilio());
+        personalReload.put("Fecha de Naciemiento",personal.getNacimiento());
+        personalReload.put("Telefono",personal.getTelefono());
+        personalReload.put("Categoria",personal.getCategoria());
+        personalReload.put("Credencial",personal.getCredencial());
+        personalReload.put("Picture",personal.getPicture());
+        personalReload.put("Seccion",personal.getSeccion());
+        personalReload.put("CI/Numero",personal.getCid().numero);
+        personalReload.put("CI/Vencimiento/Dia",personal.getCid().venc.dia);
+        personalReload.put("CI/Vencimiento/Mes",personal.getCid().venc.mes);
+        personalReload.put("CI/Vencimiento/Ano",personal.getCid().venc.ano);
+        personalReload.put("CI/Imagen",personal.getCid().imagen);
+        personalReload.put("CS/Vencimiento/Dia",personal.getCsalud().venc.dia);
+        personalReload.put("CS/Vencimiento/Mes",personal.getCsalud().venc.mes);
+        personalReload.put("CS/Vencimiento/Ano",personal.getCsalud().venc.ano);
+        personalReload.put("CS/Imagen",personal.getCsalud().imagen);
+        personalReload.put("LC/Vencimiento/Dia",personal.getLicienciaC().venc.dia);
+        personalReload.put("LC/Vencimiento/Mes",personal.getLicienciaC().venc.mes);
+        personalReload.put("LC/Vencimiento/Ano",personal.getLicienciaC().venc.ano);
+        personalReload.put("LC/Imagen",personal.getLicienciaC().imagen);
+        personalReload.put("LC/Categoria",personal.getLicienciaC().cat);
+        personal.getReference().updateChildren(personalReload);
+
+    }
+
+
 }

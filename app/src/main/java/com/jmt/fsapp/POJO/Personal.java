@@ -1,31 +1,52 @@
 package com.jmt.fsapp.POJO;
 
+import com.google.firebase.database.DatabaseReference;
 import com.jmt.fsapp.datatype.Cid;
 import com.jmt.fsapp.datatype.Csalud;
 import com.jmt.fsapp.datatype.Fecha;
 import com.jmt.fsapp.datatype.LicienciaC;
-import com.jmt.fsapp.datatype.Seccion;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Personal {
+    private DatabaseReference reference;
     private String nombre;
     private String apellido;
     private String picture;
     private String domicilio;
     private String usuario;
-    private Fecha ingreso;
+    private Fecha ingreso = new Fecha();
     private int acceso;
-    private Fecha nacimiento;
+    private Fecha nacimiento = new Fecha();
     private Cid cid = new Cid();
     private String telefono;
     private LicienciaC licienciaC = new LicienciaC();
     private String categoria;
     private Csalud csalud = new Csalud();
-    private Fecha cind;
-    private Seccion seccion;
+    private Fecha cind = new Fecha();
+    private String seccion;
     private String credencial; // Verificar si es necesario agregar tipo de dato
 
     public Personal() {
+        this.nombre = "";
+        this.apellido = "";
+        this.picture = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
+        this.domicilio = "";
+        this.seccion = "";
+        this.usuario ="";
+        this.telefono = "";
+        this.categoria = "";
+    }
 
+    public DatabaseReference getReference() {
+        return reference;
+    }
+
+    public void setReference(DatabaseReference reference) {
+        this.reference = reference;
     }
 
     public String getPicture() {
@@ -50,6 +71,13 @@ public class Personal {
 
     public void setIngreso(Fecha ingreso) {
         this.ingreso = ingreso;
+    }
+
+    public void setIngreso(String ingreso) {
+        List<Integer> numeros = extraerNumeros(ingreso);
+        this.ingreso.dia = numeros.get(0);
+        this.ingreso.mes = numeros.get(1);
+        this.ingreso.ano = numeros.get(2);
     }
 
     public String getDomicilio() {
@@ -100,12 +128,24 @@ public class Personal {
         this.nacimiento = nacimiento;
     }
 
+    public void setNacimiento(String nacimiento) {
+        List<Integer> numeros = extraerNumeros(nacimiento);
+        this.nacimiento.dia = numeros.get(0);
+        this.nacimiento.mes = numeros.get(1);
+        this.nacimiento.ano = numeros.get(2);
+    }
+
     public Cid getCid() {
         return cid;
     }
 
-    public void setCid(Cid cid) {
-        this.cid = cid;
+    public void setCid(String venc, String numero, String imagen) {
+        List<Integer> numeros = extraerNumeros(venc);
+        this.cid.venc.dia = numeros.get(0);
+        this.cid.venc.mes = numeros.get(1);
+        this.cid.venc.ano = numeros.get(2);
+        this.cid.numero = numero;
+        this.cid.imagen = imagen;
     }
 
     public void setCidnumero(String cidnumero){
@@ -145,16 +185,25 @@ public class Personal {
         return licienciaC;
     }
 
-    public void setLicienciaC(LicienciaC licienciaC) {
-        this.licienciaC = licienciaC;
+    public void setLicienciaC(String venc,String cat,String imagen) {
+        List<Integer> numeros = extraerNumeros(venc);
+        this.licienciaC.venc.dia = numeros.get(0);
+        this.licienciaC.venc.mes = numeros.get(1);
+        this.licienciaC.venc.ano = numeros.get(2);
+        this.licienciaC.cat = cat;
+        this.licienciaC.imagen = imagen;
     }
 
     public Csalud getCsalud() {
         return csalud;
     }
 
-    public void setCsalud(Csalud csalud) {
-        this.csalud = csalud;
+    public void setCsalud(String venc, String imagen) {
+        List<Integer> numeros = extraerNumeros(venc);
+        this.csalud.venc.dia = numeros.get(0);
+        this.csalud.venc.mes = numeros.get(1);
+        this.csalud.venc.ano = numeros.get(2);
+        this.csalud.imagen = imagen;
     }
 
     public Fecha getCind() {
@@ -165,11 +214,11 @@ public class Personal {
         this.cind = cind;
     }
 
-    public Seccion getSeccion() {
+    public String getSeccion() {
         return seccion;
     }
 
-    public void setSeccion(Seccion seccion) {
+    public void setSeccion(String seccion) {
         this.seccion = seccion;
     }
 
@@ -179,5 +228,15 @@ public class Personal {
 
     public void setCredencial(String credencial) {
         this.credencial = credencial;
+    }
+
+
+    List<Integer> extraerNumeros(String cadena) {
+        List<Integer> todosLosNumeros = new ArrayList<Integer>();
+        Matcher encuentrador = Pattern.compile("\\d+").matcher(cadena);
+        while (encuentrador.find()) {
+            todosLosNumeros.add(Integer.parseInt(encuentrador.group()));
+        }
+        return todosLosNumeros;
     }
 }

@@ -8,6 +8,7 @@
     <item
         android:id="@+id/itemmenurecibo"
         android:title="Ver Recibos de Sueldo" />
+    <item android:title="Agregar Usuario" />
     <item
         android:id="@+id/menuitemSalir"
         android:title="Salir" />
