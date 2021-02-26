@@ -1,6 +1,7 @@
 package com.jmt.fsapp.POJO;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 import com.jmt.fsapp.datatype.Cid;
 import com.jmt.fsapp.datatype.Csalud;
 import com.jmt.fsapp.datatype.Fecha;
@@ -18,6 +19,7 @@ public class Personal {
     private String picture;
     private String domicilio;
     private String usuario;
+    private String contrasena;
     private Fecha ingreso = new Fecha();
     private int acceso;
     private Fecha nacimiento = new Fecha();
@@ -30,10 +32,29 @@ public class Personal {
     private String seccion;
     private String credencial; // Verificar si es necesario agregar tipo de dato
 
+
+
     public Personal() {
         this.nombre = "";
         this.apellido = "";
         this.picture = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
+        this.cid.imagen = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
+        this.csalud.imagen = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
+        this.licienciaC.imagen = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
+        this.cid.numero = "";
+        this.nacimiento.dia = 1;
+        this.nacimiento.mes = 1;
+        this.nacimiento.ano = 1990;
+        this.cid.venc.dia = 1;
+        this.cid.venc.mes = 1;
+        this.cid.venc.ano = 2021;
+        this.licienciaC.cat ="";
+        this.licienciaC.venc.dia = 1;
+        this.licienciaC.venc.mes = 1;
+        this.licienciaC.venc.ano = 2021;
+        this.csalud.venc.dia = 1;
+        this.csalud.venc.mes = 1;
+        this.csalud.venc.ano = 2021;
         this.domicilio = "";
         this.seccion = "";
         this.usuario ="";
@@ -47,6 +68,14 @@ public class Personal {
 
     public void setReference(DatabaseReference reference) {
         this.reference = reference;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getPicture() {
@@ -73,6 +102,7 @@ public class Personal {
         this.ingreso = ingreso;
     }
 
+    @Exclude
     public void setIngreso(String ingreso) {
         List<Integer> numeros = extraerNumeros(ingreso);
         this.ingreso.dia = numeros.get(0);
@@ -128,6 +158,7 @@ public class Personal {
         this.nacimiento = nacimiento;
     }
 
+    @Exclude
     public void setNacimiento(String nacimiento) {
         List<Integer> numeros = extraerNumeros(nacimiento);
         this.nacimiento.dia = numeros.get(0);
@@ -139,6 +170,11 @@ public class Personal {
         return cid;
     }
 
+    public void setCid(Cid cid) {
+        this.cid = cid;
+    }
+
+    @Exclude
     public void setCid(String venc, String numero, String imagen) {
         List<Integer> numeros = extraerNumeros(venc);
         this.cid.venc.dia = numeros.get(0);
@@ -185,7 +221,11 @@ public class Personal {
         return licienciaC;
     }
 
-    public void setLicienciaC(String venc,String cat,String imagen) {
+    public void setLicienciaC(LicienciaC licienciaC) {
+        this.licienciaC = licienciaC;
+    }
+    @Exclude
+    public void setLicienciaC(String venc, String cat, String imagen) {
         List<Integer> numeros = extraerNumeros(venc);
         this.licienciaC.venc.dia = numeros.get(0);
         this.licienciaC.venc.mes = numeros.get(1);
@@ -198,6 +238,10 @@ public class Personal {
         return csalud;
     }
 
+    public void setCsalud(Csalud csalud) {
+        this.csalud = csalud;
+    }
+    @Exclude
     public void setCsalud(String venc, String imagen) {
         List<Integer> numeros = extraerNumeros(venc);
         this.csalud.venc.dia = numeros.get(0);

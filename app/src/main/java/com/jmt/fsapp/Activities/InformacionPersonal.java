@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 
@@ -41,16 +42,17 @@ import java.util.regex.Pattern;
 
 public class InformacionPersonal extends AppCompatActivity {
     private Toolbar toolbar;
-    private EditText nombre,apellido,domicilio,fechanac,telefono,charlainduc,fechaingreso,seccion,categoria,credencial,numCI,vencCI,vencCS,vencLC,catLC;
+    private EditText nombre,apellido,domicilio,fechanac,telefono,charlainduc,fechaingreso,seccion,categoria,credencial,numCI,vencCI,vencCS,vencLC,catLC,usuario,contrasena;
     private Button agregarpicture,rotarpicture,agregarCI,rotarCI,agregarLC,rotarLC,agregarCS,rotarCS,guardar;
+    private LinearLayout etUsuario,etContrasena,spinerUsuarios;
     private Spinner usuarios;
     private ArrayList<EditText> editTexts = new ArrayList<>();
     private ArrayList<Personal> personals = new ArrayList<>();
+    private Personal personal;
     private ImageView ci,lc,cs,pict;
     private DatabaseReference mdataBase;
     private FirebaseUser user;
     private Activity activity = this;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,11 @@ public class InformacionPersonal extends AppCompatActivity {
         rotarpicture = findViewById(R.id.rotarpicture);
         guardar = findViewById(R.id.guardar);
         usuarios = findViewById(R.id.usuariosSP);
+        usuario = findViewById(R.id.eTusuario);
+        etUsuario = findViewById(R.id.lletusuario);
+        etContrasena = findViewById(R.id.lletcontrasena);
+        contrasena = findViewById(R.id.eTcontrasena);
+        spinerUsuarios = findViewById(R.id.llspinerusuarios);
         cargarEditTexts();
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +110,7 @@ public class InformacionPersonal extends AppCompatActivity {
                         subirInfo(gurdarInfo(personal));
                     }
                 }
+
             }
         });
         for(EditText et: editTexts){
@@ -111,7 +119,7 @@ public class InformacionPersonal extends AppCompatActivity {
         }
 
     }
-    //Metodo que carga el menu a partiru de un objeto tipo Personal
+    //Metodo que carga el menu a partir de un objeto tipo Personal
     private void cargarInfo(Personal personal){
         nombre.setText(personal.getNombre());
         apellido.setText(personal.getApellido());
@@ -243,6 +251,24 @@ public class InformacionPersonal extends AppCompatActivity {
         vencCS.setTextIsSelectable(false);
         iniciarDatePicker();
     }
+    private void usuarioNuevo(){
+        personal = new Personal();
+        editarInfo();
+        spinerUsuarios.setVisibility(View.GONE);
+        etUsuario.setVisibility(View.VISIBLE);
+        etContrasena.setVisibility(View.VISIBLE);
+        cargarInfo(personal);
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Guardar", "No Hice nada");
+                personal = gurdarInfo(personal);
+                personal.setUsuario(usuario.getText().toString());
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuario.getText().toString(),contrasena.getText().toString());
+                mdataBase.push().setValue(personal);
+            }
+        });
+    }
     private void cargarEditTexts(){
         editTexts.add(nombre);
         editTexts.add(apellido);
@@ -270,10 +296,12 @@ public class InformacionPersonal extends AppCompatActivity {
         int id = item.getItemId();
         if(id == R.id.itemmenueditar){
             editarInfo();
-            Log.i("MENU","Editar Info");
         }
         if(id == R.id.itemmenurecibo){
             Log.i("MENU","El segundo");
+        }
+        if(id == R.id.menuAgregarUsuario){
+            usuarioNuevo();
         }
         if(id == R.id.menuitemSalir){
             Log.i("MENU","El tercero");
@@ -368,7 +396,7 @@ public class InformacionPersonal extends AppCompatActivity {
         personalReload.put("Nombre",personal.getNombre());
         personalReload.put("Apellido",personal.getApellido());
         personalReload.put("Domicilio",personal.getDomicilio());
-        personalReload.put("Fecha de Naciemiento",personal.getNacimiento());
+        personalReload.put("Fecha de Nacimiento",personal.getNacimiento());
         personalReload.put("Telefono",personal.getTelefono());
         personalReload.put("Categoria",personal.getCategoria());
         personalReload.put("Credencial",personal.getCredencial());
