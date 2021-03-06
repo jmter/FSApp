@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
         GridLayoutManager gridLayoutManagerm = new GridLayoutManager(this,2);
+        textActionBar.setText("Bienvenido "+ mAuth.getCurrentUser().getEmail());
         menuRV.setLayoutManager(gridLayoutManagerm);
     }
     private void logOut(){

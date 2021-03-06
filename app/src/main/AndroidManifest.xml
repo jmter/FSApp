@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jmt.fsapp">
-
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.InformacionPersonal"></activity>
+        <activity android:name=".Activities.CameraScanDoc"></activity>
+        <activity android:name=".Activities.InformacionPersonal" />
         <activity android:name=".Activities.Equipos" />
         <activity
             android:name=".Activities.Login"
@@ -23,6 +25,8 @@
         <activity
             android:name=".Activities.MainActivity"
             android:noHistory="true" />
+
     </application>
+
 
 </manifest>

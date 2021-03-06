@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,9 @@ import android.widget.Spinner;
 
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,10 +39,7 @@ import com.jmt.fsapp.datatype.Fecha;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class InformacionPersonal extends AppCompatActivity {
     private Toolbar toolbar;
@@ -53,13 +54,16 @@ public class InformacionPersonal extends AppCompatActivity {
     private DatabaseReference mdataBase;
     private FirebaseUser user;
     private Activity activity = this;
+    private ArrayList<String> users = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacion_personal);
-        iniciarGraficos();
-        user = FirebaseAuth.getInstance().getCurrentUser();
         mdataBase = FirebaseDatabase.getInstance().getReference().child("Usuarios");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        iniciarGraficos();
+        Log.i("Usuario", "Inicio"+user.getEmail());
         loadDB();
     }
 
@@ -121,7 +125,9 @@ public class InformacionPersonal extends AppCompatActivity {
     }
     //Metodo que carga el menu a partir de un objeto tipo Personal
     private void cargarInfo(Personal personal){
+        //usuarios.setSelection(users.indexOf(user.getEmail()));
         nombre.setText(personal.getNombre());
+        Log.i("Usuario", personal.getNombre());
         apellido.setText(personal.getApellido());
         domicilio.setText(personal.getDomicilio());
         fechanac.setText(personal.getNacimiento().toString());
@@ -134,12 +140,12 @@ public class InformacionPersonal extends AppCompatActivity {
         numCI.setText(personal.getCid().numero);
         vencCI.setText(personal.getCid().venc.toString());
         vencCS.setText(personal.getCsalud().venc.toString());
-        vencLC.setText(personal.getLicienciaC().venc.toString());
-        catLC.setText(personal.getLicienciaC().cat);
-        Glide.with(activity).load(personal.getCid().imagen).into(ci);
-        Glide.with(activity).load(personal.getLicienciaC().imagen).into(lc);
-        Glide.with(activity).load(personal.getCsalud().imagen).into(cs);
-        Glide.with(activity).load(personal.getPicture()).into(pict);
+        vencLC.setText(personal.getLicenciaC().venc.toString());
+        catLC.setText(personal.getLicenciaC().cat);
+        Glide.with(getApplicationContext()).load(personal.getCid().imagen).into(ci);
+        Glide.with(getApplicationContext()).load(personal.getLicenciaC().imagen).into(lc);
+        Glide.with(getApplicationContext()).load(personal.getCsalud().imagen).into(cs);
+        Glide.with(getApplicationContext()).load(personal.getPicture()).into(pict);
     }
     //Metodo que carga el array personals con la info de los usuarios
     private void loadDB(){
@@ -151,6 +157,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 loadUsers(personals);
                 for (Personal ps : personals) {
                     if (ps.getUsuario().equals(user.getEmail())) {
+                        Log.i("Usuario","Cargo"+user.getEmail());
                         cargarInfo(ps);
                     }
                 }
@@ -171,26 +178,26 @@ public class InformacionPersonal extends AppCompatActivity {
             ;
             try {
                 personal.setReference(ds.getRef());
-                personal.setUsuario(ds.child("Usuario").getValue().toString());
-                personal.setNombre(ds.child("Nombre").getValue().toString());
-                personal.setApellido(ds.child("Apellido").getValue().toString());
-                personal.setDomicilio(ds.child("Domicilio").getValue().toString());
-                personal.setNacimiento(new Fecha(Integer.parseInt(ds.child("Fecha de Nacimiento").child("Dia").getValue().toString()),Integer.parseInt(ds.child("Fecha de Nacimiento").child("Mes").getValue().toString()),Integer.parseInt(ds.child("Fecha de Nacimiento").child("Ano").getValue().toString())));
-                personal.setTelefono(ds.child("Telefono").getValue().toString());
+                personal.setUsuario(ds.child("usuario").getValue().toString());
+                personal.setNombre(ds.child("nombre").getValue().toString());
+                personal.setApellido(ds.child("apellido").getValue().toString());
+                personal.setDomicilio(ds.child("domicilio").getValue().toString());
+                personal.setNacimiento(new Fecha(Integer.parseInt(ds.child("nacimiento").child("dia").getValue().toString()),Integer.parseInt(ds.child("nacimiento").child("mes").getValue().toString()),Integer.parseInt(ds.child("nacimiento").child("ano").getValue().toString())));
+                personal.setTelefono(ds.child("telefono").getValue().toString());
                 //personal.setCind(new Fecha(Integer.parseInt(ds.child("CInd").child("Dia").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Mes").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Ano").getValue().toString())));
-                personal.setIngreso(new Fecha(Integer.parseInt(ds.child("Ingreso").child("Dia").getValue().toString()),Integer.parseInt(ds.child("Ingreso").child("Mes").getValue().toString()),Integer.parseInt(ds.child("Ingreso").child("Ano").getValue().toString())));
-                personal.setSeccion(ds.child("Seccion").getValue().toString());
-                personal.setCategoria(ds.child("Categoria").getValue().toString());
-                personal.setCredencial(ds.child("Credencial").getValue().toString());
-                personal.setCidnumero(ds.child("CI").child("Numero").getValue().toString());
-                personal.setCidvenc(new Fecha(Integer.parseInt(ds.child("CI").child("Vencimiento").child("Dia").getValue().toString()),Integer.parseInt(ds.child("CI").child("Vencimiento").child("Mes").getValue().toString()),Integer.parseInt(ds.child("CI").child("Vencimiento").child("Ano").getValue().toString())));
-                personal.setCSvenc(new Fecha(Integer.parseInt(ds.child("CS").child("Vencimiento").child("Dia").getValue().toString()),Integer.parseInt(ds.child("CS").child("Vencimiento").child("Mes").getValue().toString()),Integer.parseInt(ds.child("CS").child("Vencimiento").child("Ano").getValue().toString())));
-                personal.setLCvenc(new Fecha(Integer.parseInt(ds.child("LC").child("Vencimiento").child("Dia").getValue().toString()),Integer.parseInt(ds.child("LC").child("Vencimiento").child("Mes").getValue().toString()),Integer.parseInt(ds.child("LC").child("Vencimiento").child("Ano").getValue().toString())));
-                personal.setLCcategoria(ds.child("LC").child("Categoria").getValue().toString());
-                personal.setLCimagen(ds.child("LC").child("Imagen").getValue().toString());
-                personal.setCidimagen(ds.child("CI").child("Imagen").getValue().toString());
-                personal.setCSimagen(ds.child("CS").child("Imagen").getValue().toString());
-                personal.setPicture(ds.child("Picture").getValue().toString());
+                personal.setIngreso(new Fecha(Integer.parseInt(ds.child("ingreso").child("dia").getValue().toString()),Integer.parseInt(ds.child("ingreso").child("mes").getValue().toString()),Integer.parseInt(ds.child("ingreso").child("ano").getValue().toString())));
+                personal.setSeccion(ds.child("seccion").getValue().toString());
+                personal.setCategoria(ds.child("categoria").getValue().toString());
+                personal.setCredencial(ds.child("credencial").getValue().toString());
+                personal.setCidnumero(ds.child("cid").child("numero").getValue().toString());
+                personal.setCidvenc(new Fecha(Integer.parseInt(ds.child("cid").child("venc").child("dia").getValue().toString()),Integer.parseInt(ds.child("cid").child("venc").child("mes").getValue().toString()),Integer.parseInt(ds.child("cid").child("venc").child("ano").getValue().toString())));
+                personal.setCSvenc(new Fecha(Integer.parseInt(ds.child("csalud").child("venc").child("dia").getValue().toString()),Integer.parseInt(ds.child("csalud").child("venc").child("mes").getValue().toString()),Integer.parseInt(ds.child("csalud").child("venc").child("ano").getValue().toString())));
+                personal.setLCvenc(new Fecha(Integer.parseInt(ds.child("licenciaC").child("venc").child("dia").getValue().toString()),Integer.parseInt(ds.child("licenciaC").child("venc").child("mes").getValue().toString()),Integer.parseInt(ds.child("licenciaC").child("venc").child("ano").getValue().toString())));
+                personal.setLCcategoria(ds.child("licenciaC").child("cat").getValue().toString());
+                personal.setLCimagen(ds.child("licenciaC").child("imagen").getValue().toString());
+                personal.setCidimagen(ds.child("cid").child("imagen").getValue().toString());
+                personal.setCSimagen(ds.child("csalud").child("imagen").getValue().toString());
+                personal.setPicture(ds.child("picture").getValue().toString());
                 users.add(personal);
 
             } catch (Exception e) {
@@ -201,7 +208,7 @@ public class InformacionPersonal extends AppCompatActivity {
     }
     //Metodo que carga el listado de usuarios
     private void loadUsers(ArrayList<Personal> snapshot){
-        ArrayList<String> users = new ArrayList<>();
+        users.clear();
         for(Personal ds : snapshot){
             users.add(ds.getUsuario());
         }
@@ -215,6 +222,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 for (Personal ps : personals) {
                     if (ps.getUsuario().equals(usuarios.getItemAtPosition(position))) {
                         cargarInfo(ps);
+                        Log.i("Usuario","Selecciono"+ps.getNombre());
                     }
                 }
             }
@@ -235,6 +243,14 @@ public class InformacionPersonal extends AppCompatActivity {
 
         }
         agregarCI.setVisibility(View.VISIBLE);
+        agregarpicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, CameraScanDoc.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         agregarCS.setVisibility(View.VISIBLE);
         agregarLC.setVisibility(View.VISIBLE);
         agregarpicture.setVisibility(View.VISIBLE);
@@ -243,7 +259,6 @@ public class InformacionPersonal extends AppCompatActivity {
         rotarLC.setVisibility(View.VISIBLE);
         rotarpicture.setVisibility(View.VISIBLE);
         guardar.setVisibility(View.VISIBLE);
-
         fechanac.setTextIsSelectable(false);
         fechaingreso.setTextIsSelectable(false);
         vencCI.setTextIsSelectable(false);
@@ -251,6 +266,7 @@ public class InformacionPersonal extends AppCompatActivity {
         vencCS.setTextIsSelectable(false);
         iniciarDatePicker();
     }
+    //Metodo usado para agregar un usuario nuevo
     private void usuarioNuevo(){
         personal = new Personal();
         editarInfo();
@@ -261,11 +277,21 @@ public class InformacionPersonal extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Guardar", "No Hice nada");
                 personal = gurdarInfo(personal);
                 personal.setUsuario(usuario.getText().toString());
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuario.getText().toString(),contrasena.getText().toString());
-                mdataBase.push().setValue(personal);
+                final FirebaseAuth newUser = FirebaseAuth.getInstance();
+                newUser.createUserWithEmailAndPassword(usuario.getText().toString(), contrasena.getText().toString())
+                        .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    mdataBase.push().setValue(personal);
+                                    activity.recreate();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                }
+                            }
+                        });
             }
         });
     }
@@ -386,39 +412,40 @@ public class InformacionPersonal extends AppCompatActivity {
         personal.setCategoria(categoria.getText().toString());
         personal.setCredencial(credencial.getText().toString());
         personal.setCid(vencCI.getText().toString(),numCI.getText().toString(),personal.getCid().imagen);//Falta  implementar la imagen
-        personal.setLicienciaC(vencLC.getText().toString(),catLC.getText().toString(),personal.getLicienciaC().imagen);//Falta  implementar la imagen
+        personal.setLicienciaC(vencLC.getText().toString(),catLC.getText().toString(),personal.getLicenciaC().imagen);//Falta  implementar la imagen
         personal.setCsalud(vencCS.getText().toString(),personal.getCsalud().imagen);
         return personal;
     }
     //A partir de un objeto tipor Personal lo actualiza en la nube
     public void subirInfo(Personal personal){
         Map<String, Object> personalReload = new HashMap<>();
-        personalReload.put("Nombre",personal.getNombre());
-        personalReload.put("Apellido",personal.getApellido());
-        personalReload.put("Domicilio",personal.getDomicilio());
-        personalReload.put("Fecha de Nacimiento",personal.getNacimiento());
-        personalReload.put("Telefono",personal.getTelefono());
-        personalReload.put("Categoria",personal.getCategoria());
-        personalReload.put("Credencial",personal.getCredencial());
-        personalReload.put("Picture",personal.getPicture());
-        personalReload.put("Seccion",personal.getSeccion());
-        personalReload.put("CI/Numero",personal.getCid().numero);
-        personalReload.put("CI/Vencimiento/Dia",personal.getCid().venc.dia);
-        personalReload.put("CI/Vencimiento/Mes",personal.getCid().venc.mes);
-        personalReload.put("CI/Vencimiento/Ano",personal.getCid().venc.ano);
-        personalReload.put("CI/Imagen",personal.getCid().imagen);
-        personalReload.put("CS/Vencimiento/Dia",personal.getCsalud().venc.dia);
-        personalReload.put("CS/Vencimiento/Mes",personal.getCsalud().venc.mes);
-        personalReload.put("CS/Vencimiento/Ano",personal.getCsalud().venc.ano);
-        personalReload.put("CS/Imagen",personal.getCsalud().imagen);
-        personalReload.put("LC/Vencimiento/Dia",personal.getLicienciaC().venc.dia);
-        personalReload.put("LC/Vencimiento/Mes",personal.getLicienciaC().venc.mes);
-        personalReload.put("LC/Vencimiento/Ano",personal.getLicienciaC().venc.ano);
-        personalReload.put("LC/Imagen",personal.getLicienciaC().imagen);
-        personalReload.put("LC/Categoria",personal.getLicienciaC().cat);
+        personalReload.put("nombre",personal.getNombre());
+        personalReload.put("apellido",personal.getApellido());
+        personalReload.put("domicilio",personal.getDomicilio());
+        personalReload.put("nacimiento",personal.getNacimiento());
+        personalReload.put("telefono",personal.getTelefono());
+        personalReload.put("categoria",personal.getCategoria());
+        personalReload.put("credencial",personal.getCredencial());
+        personalReload.put("picture",personal.getPicture());
+        personalReload.put("seccion",personal.getSeccion());
+        personalReload.put("cid/numero",personal.getCid().numero);
+        personalReload.put("cid/venc/dia",personal.getCid().venc.dia);
+        personalReload.put("cid/venc/mes",personal.getCid().venc.mes);
+        personalReload.put("cid/venc/ano",personal.getCid().venc.ano);
+        personalReload.put("cid/imagen",personal.getCid().imagen);
+        personalReload.put("csalud/venc/dia",personal.getCsalud().venc.dia);
+        personalReload.put("csalud/venc/mes",personal.getCsalud().venc.mes);
+        personalReload.put("csalud/venc/ano",personal.getCsalud().venc.ano);
+        personalReload.put("ingreso/dia",personal.getIngreso().dia);
+        personalReload.put("ingreso/mes",personal.getIngreso().mes);
+        personalReload.put("ingreso/ano",personal.getIngreso().ano);
+        personalReload.put("csalud/imagen",personal.getCsalud().imagen);
+        personalReload.put("licenciaC/venc/dia",personal.getLicenciaC().venc.dia);
+        personalReload.put("licenciaC/venc/mes",personal.getLicenciaC().venc.mes);
+        personalReload.put("licenciaC/venc/ano",personal.getLicenciaC().venc.ano);
+        personalReload.put("licenciaC/imagen",personal.getLicenciaC().imagen);
+        personalReload.put("licenciaC/cat",personal.getLicenciaC().cat);
         personal.getReference().updateChildren(personalReload);
 
     }
-
-
 }

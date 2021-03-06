@@ -25,7 +25,7 @@ public class Personal {
     private Fecha nacimiento = new Fecha();
     private Cid cid = new Cid();
     private String telefono;
-    private LicienciaC licienciaC = new LicienciaC();
+    private LicienciaC licenciaC = new LicienciaC();
     private String categoria;
     private Csalud csalud = new Csalud();
     private Fecha cind = new Fecha();
@@ -40,7 +40,7 @@ public class Personal {
         this.picture = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
         this.cid.imagen = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
         this.csalud.imagen = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
-        this.licienciaC.imagen = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
+        this.licenciaC.imagen = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";
         this.cid.numero = "";
         this.nacimiento.dia = 1;
         this.nacimiento.mes = 1;
@@ -48,10 +48,10 @@ public class Personal {
         this.cid.venc.dia = 1;
         this.cid.venc.mes = 1;
         this.cid.venc.ano = 2021;
-        this.licienciaC.cat ="";
-        this.licienciaC.venc.dia = 1;
-        this.licienciaC.venc.mes = 1;
-        this.licienciaC.venc.ano = 2021;
+        this.licenciaC.cat ="";
+        this.licenciaC.venc.dia = 1;
+        this.licenciaC.venc.mes = 1;
+        this.licenciaC.venc.ano = 2021;
         this.csalud.venc.dia = 1;
         this.csalud.venc.mes = 1;
         this.csalud.venc.ano = 2021;
@@ -195,16 +195,16 @@ public class Personal {
         this.csalud.venc = cSvenc;
     }
     public void setLCvenc(Fecha lCvenc){
-        this.licienciaC.venc = lCvenc;
+        this.licenciaC.venc = lCvenc;
     }
     public void setLCcategoria(String lCcategoria){
-        this.licienciaC.cat = lCcategoria;
+        this.licenciaC.cat = lCcategoria;
     }
     public void setCidimagen(String cidimagen){
         this.cid.imagen = cidimagen;
     }
     public void setLCimagen(String lCimagen){
-        this.licienciaC.imagen = lCimagen;
+        this.licenciaC.imagen = lCimagen;
     }
     public void setCSimagen(String cSimagen){
         this.csalud.imagen = cSimagen;
@@ -217,21 +217,21 @@ public class Personal {
         this.telefono = telefono;
     }
 
-    public LicienciaC getLicienciaC() {
-        return licienciaC;
+    public LicienciaC getLicenciaC() {
+        return licenciaC;
     }
 
-    public void setLicienciaC(LicienciaC licienciaC) {
-        this.licienciaC = licienciaC;
+    public void setLicenciaC(LicienciaC licenciaC) {
+        this.licenciaC = licenciaC;
     }
     @Exclude
     public void setLicienciaC(String venc, String cat, String imagen) {
         List<Integer> numeros = extraerNumeros(venc);
-        this.licienciaC.venc.dia = numeros.get(0);
-        this.licienciaC.venc.mes = numeros.get(1);
-        this.licienciaC.venc.ano = numeros.get(2);
-        this.licienciaC.cat = cat;
-        this.licienciaC.imagen = imagen;
+        this.licenciaC.venc.dia = numeros.get(0);
+        this.licenciaC.venc.mes = numeros.get(1);
+        this.licenciaC.venc.ano = numeros.get(2);
+        this.licenciaC.cat = cat;
+        this.licenciaC.imagen = imagen;
     }
 
     public Csalud getCsalud() {
