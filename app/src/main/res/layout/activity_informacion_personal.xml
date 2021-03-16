@@ -78,14 +78,6 @@
                         android:text="Agregar"
                         android:visibility="gone"/>
 
-                    <Button
-                        android:id="@+id/rotarpicture"
-                        android:layout_marginStart="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rotar"
-                        android:layout_marginLeft="5dp"
-                        android:visibility="gone"/>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
@@ -383,15 +375,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/iVcedula"
                     android:visibility="gone"/>
 
-                <Button
-                    android:id="@+id/rotarCI"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rotar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/agregarCI"
-                    app:layout_constraintTop_toBottomOf="@+id/iVcedula"
-                    android:visibility="gone"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -463,18 +446,11 @@
                     android:layout_height="wrap_content"
                     android:text="Agregar"
                     android:visibility="gone"
-                    app:layout_constraintEnd_toStartOf="@+id/rotarLC"
+                    app:layout_constraintEnd_toEndOf="@+id/iVlicenciadeconducir"
                     app:layout_constraintStart_toStartOf="@+id/iVlicenciadeconducir"
                     app:layout_constraintTop_toBottomOf="@+id/iVlicenciadeconducir" />
 
-                <Button
-                    android:id="@+id/rotarLC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rotar"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="@+id/iVlicenciadeconducir"
-                    app:layout_constraintTop_toBottomOf="@+id/iVlicenciadeconducir" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -527,18 +503,6 @@
                     app:layout_constraintStart_toStartOf="@+id/iVcarnedesalud"
                     app:layout_constraintTop_toBottomOf="@+id/iVcarnedesalud"
                     android:visibility="gone"/>
-
-                <Button
-                    android:id="@+id/rotarCS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:text="Rotar"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="@+id/iVcarnedesalud"
-                    app:layout_constraintStart_toEndOf="@+id/agregarCS"
-                    app:layout_constraintTop_toBottomOf="@+id/iVcarnedesalud" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <Button
                 android:id="@+id/guardar"

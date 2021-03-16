@@ -1,6 +1,7 @@
 package com.jmt.fsapp.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -55,7 +56,7 @@ public class InformacionPersonal extends AppCompatActivity {
     private FirebaseUser user;
     private Activity activity = this;
     private ArrayList<String> users = new ArrayList<>();
-
+    static final int ASK_QUESTION_REQUEST = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +67,59 @@ public class InformacionPersonal extends AppCompatActivity {
         Log.i("Usuario", "Inicio"+user.getEmail());
         loadDB();
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 1
+        if (requestCode == ASK_QUESTION_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Log.i("CameraResult",data.getStringExtra("URL"));
+                usuarios.setSelection(getIndexSpinner(usuarios,data.getStringExtra("user")));
+                for(Personal ps: personals){
+                    if(data.getStringExtra("user").equals(ps.getUsuario())){
+                        switch (data.getStringExtra("name")){
+                            case "PIC":
+                                ps.setPicture(data.getStringExtra("URL"));
+                                break;
+                            case "LC":
+                                ps.setLCimagen(data.getStringExtra("URL"));
+                                break;
+                            case "CI":
+                                ps.setCidimagen(data.getStringExtra("URL"));
+                                break;
+                            case "CS":
+                                ps.setCSimagen(data.getStringExtra("URL"));
+                                break;
+                        }
+                        cargarInfo(ps);
+                    }
+
+                }
 
 
+
+            }
+        }
+    }
+    private void cargarEditTexts(){
+        editTexts.add(nombre);
+        editTexts.add(apellido);
+        editTexts.add(domicilio);
+        editTexts.add(fechanac);
+        editTexts.add(telefono);
+        editTexts.add(charlainduc);
+        editTexts.add(fechaingreso);
+        editTexts.add(seccion);
+        editTexts.add(categoria);
+        editTexts.add(credencial);
+        editTexts.add(numCI);
+        editTexts.add(vencCI);
+        editTexts.add(vencCS);
+        editTexts.add(catLC);
+        editTexts.add(vencLC);
+
+    }
     private void iniciarGraficos(){
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,10 +146,6 @@ public class InformacionPersonal extends AppCompatActivity {
         agregarCS = findViewById(R.id.agregarCS);
         agregarLC = findViewById(R.id.agregarLC);
         agregarpicture = findViewById(R.id.agregarpicture);
-        rotarCI = findViewById(R.id.rotarCI);
-        rotarCS = findViewById(R.id.rotarCS);
-        rotarLC = findViewById(R.id.rotarLC);
-        rotarpicture = findViewById(R.id.rotarpicture);
         guardar = findViewById(R.id.guardar);
         usuarios = findViewById(R.id.usuariosSP);
         usuario = findViewById(R.id.eTusuario);
@@ -112,6 +160,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 for(Personal personal: personals){
                     if(personal.getUsuario().equals(usuarios.getSelectedItem().toString())){
                         subirInfo(gurdarInfo(personal));
+                        activity.recreate();
                     }
                 }
 
@@ -123,197 +172,6 @@ public class InformacionPersonal extends AppCompatActivity {
         }
 
     }
-    //Metodo que carga el menu a partir de un objeto tipo Personal
-    private void cargarInfo(Personal personal){
-        //usuarios.setSelection(users.indexOf(user.getEmail()));
-        nombre.setText(personal.getNombre());
-        Log.i("Usuario", personal.getNombre());
-        apellido.setText(personal.getApellido());
-        domicilio.setText(personal.getDomicilio());
-        fechanac.setText(personal.getNacimiento().toString());
-        telefono.setText(personal.getTelefono());
-       // charlainduc.setText(personal.getCind().toString());
-        fechaingreso.setText(personal.getIngreso().toString());
-        seccion.setText(personal.getSeccion());
-        categoria.setText(personal.getCategoria());
-        credencial.setText(personal.getCredencial());
-        numCI.setText(personal.getCid().numero);
-        vencCI.setText(personal.getCid().venc.toString());
-        vencCS.setText(personal.getCsalud().venc.toString());
-        vencLC.setText(personal.getLicenciaC().venc.toString());
-        catLC.setText(personal.getLicenciaC().cat);
-        Glide.with(getApplicationContext()).load(personal.getCid().imagen).into(ci);
-        Glide.with(getApplicationContext()).load(personal.getLicenciaC().imagen).into(lc);
-        Glide.with(getApplicationContext()).load(personal.getCsalud().imagen).into(cs);
-        Glide.with(getApplicationContext()).load(personal.getPicture()).into(pict);
-    }
-    //Metodo que carga el array personals con la info de los usuarios
-    private void loadDB(){
-        mdataBase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                personals.clear();
-                personals = loadPersonal(snapshot);
-                loadUsers(personals);
-                for (Personal ps : personals) {
-                    if (ps.getUsuario().equals(user.getEmail())) {
-                        Log.i("Usuario","Cargo"+user.getEmail());
-                        cargarInfo(ps);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-    //Metodo que a partir de un data snapshot devuelve listado de info de usarios
-    private ArrayList<Personal> loadPersonal(DataSnapshot snapshot){
-        ArrayList<Personal> users = new ArrayList<>();
-        for(DataSnapshot ds : snapshot.getChildren()){
-            Personal personal = new Personal();
-            ;
-            try {
-                personal.setReference(ds.getRef());
-                personal.setUsuario(ds.child("usuario").getValue().toString());
-                personal.setNombre(ds.child("nombre").getValue().toString());
-                personal.setApellido(ds.child("apellido").getValue().toString());
-                personal.setDomicilio(ds.child("domicilio").getValue().toString());
-                personal.setNacimiento(new Fecha(Integer.parseInt(ds.child("nacimiento").child("dia").getValue().toString()),Integer.parseInt(ds.child("nacimiento").child("mes").getValue().toString()),Integer.parseInt(ds.child("nacimiento").child("ano").getValue().toString())));
-                personal.setTelefono(ds.child("telefono").getValue().toString());
-                //personal.setCind(new Fecha(Integer.parseInt(ds.child("CInd").child("Dia").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Mes").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Ano").getValue().toString())));
-                personal.setIngreso(new Fecha(Integer.parseInt(ds.child("ingreso").child("dia").getValue().toString()),Integer.parseInt(ds.child("ingreso").child("mes").getValue().toString()),Integer.parseInt(ds.child("ingreso").child("ano").getValue().toString())));
-                personal.setSeccion(ds.child("seccion").getValue().toString());
-                personal.setCategoria(ds.child("categoria").getValue().toString());
-                personal.setCredencial(ds.child("credencial").getValue().toString());
-                personal.setCidnumero(ds.child("cid").child("numero").getValue().toString());
-                personal.setCidvenc(new Fecha(Integer.parseInt(ds.child("cid").child("venc").child("dia").getValue().toString()),Integer.parseInt(ds.child("cid").child("venc").child("mes").getValue().toString()),Integer.parseInt(ds.child("cid").child("venc").child("ano").getValue().toString())));
-                personal.setCSvenc(new Fecha(Integer.parseInt(ds.child("csalud").child("venc").child("dia").getValue().toString()),Integer.parseInt(ds.child("csalud").child("venc").child("mes").getValue().toString()),Integer.parseInt(ds.child("csalud").child("venc").child("ano").getValue().toString())));
-                personal.setLCvenc(new Fecha(Integer.parseInt(ds.child("licenciaC").child("venc").child("dia").getValue().toString()),Integer.parseInt(ds.child("licenciaC").child("venc").child("mes").getValue().toString()),Integer.parseInt(ds.child("licenciaC").child("venc").child("ano").getValue().toString())));
-                personal.setLCcategoria(ds.child("licenciaC").child("cat").getValue().toString());
-                personal.setLCimagen(ds.child("licenciaC").child("imagen").getValue().toString());
-                personal.setCidimagen(ds.child("cid").child("imagen").getValue().toString());
-                personal.setCSimagen(ds.child("csalud").child("imagen").getValue().toString());
-                personal.setPicture(ds.child("picture").getValue().toString());
-                users.add(personal);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return users;
-    }
-    //Metodo que carga el listado de usuarios
-    private void loadUsers(ArrayList<Personal> snapshot){
-        users.clear();
-        for(Personal ds : snapshot){
-            users.add(ds.getUsuario());
-        }
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, users);
-        usuarios.setAdapter(spinnerArrayAdapter);
-        usuarios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (Personal ps : personals) {
-                    if (ps.getUsuario().equals(usuarios.getItemAtPosition(position))) {
-                        cargarInfo(ps);
-                        Log.i("Usuario","Selecciono"+ps.getNombre());
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-    //Implementaciones del menu overflow
-    private void editarInfo(){
-        for(EditText et: editTexts){
-            et.setEnabled(true);
-            et.setTextIsSelectable(true);
-            et.setFocusable(true);
-            et.setFocusableInTouchMode(true);
-
-        }
-        agregarCI.setVisibility(View.VISIBLE);
-        agregarpicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, CameraScanDoc.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        agregarCS.setVisibility(View.VISIBLE);
-        agregarLC.setVisibility(View.VISIBLE);
-        agregarpicture.setVisibility(View.VISIBLE);
-        rotarCI.setVisibility(View.VISIBLE);
-        rotarCS.setVisibility(View.VISIBLE);
-        rotarLC.setVisibility(View.VISIBLE);
-        rotarpicture.setVisibility(View.VISIBLE);
-        guardar.setVisibility(View.VISIBLE);
-        fechanac.setTextIsSelectable(false);
-        fechaingreso.setTextIsSelectable(false);
-        vencCI.setTextIsSelectable(false);
-        vencLC.setTextIsSelectable(false);
-        vencCS.setTextIsSelectable(false);
-        iniciarDatePicker();
-    }
-    //Metodo usado para agregar un usuario nuevo
-    private void usuarioNuevo(){
-        personal = new Personal();
-        editarInfo();
-        spinerUsuarios.setVisibility(View.GONE);
-        etUsuario.setVisibility(View.VISIBLE);
-        etContrasena.setVisibility(View.VISIBLE);
-        cargarInfo(personal);
-        guardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                personal = gurdarInfo(personal);
-                personal.setUsuario(usuario.getText().toString());
-                final FirebaseAuth newUser = FirebaseAuth.getInstance();
-                newUser.createUserWithEmailAndPassword(usuario.getText().toString(), contrasena.getText().toString())
-                        .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    mdataBase.push().setValue(personal);
-                                    activity.recreate();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                }
-                            }
-                        });
-            }
-        });
-    }
-    private void cargarEditTexts(){
-        editTexts.add(nombre);
-        editTexts.add(apellido);
-        editTexts.add(domicilio);
-        editTexts.add(fechanac);
-        editTexts.add(telefono);
-        editTexts.add(charlainduc);
-        editTexts.add(fechaingreso);
-        editTexts.add(seccion);
-        editTexts.add(categoria);
-        editTexts.add(credencial);
-        editTexts.add(numCI);
-        editTexts.add(vencCI);
-        editTexts.add(vencCS);
-        editTexts.add(catLC);
-        editTexts.add(vencLC);
-
-    }
-    //Metodos del menu overflow
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menuoverflow,menu);
         return true;
@@ -330,11 +188,13 @@ public class InformacionPersonal extends AppCompatActivity {
             usuarioNuevo();
         }
         if(id == R.id.menuitemSalir){
+            Intent intent = new Intent(activity,MainActivity.class);
+            startActivity(intent);
+            finish();
             Log.i("MENU","El tercero");
         }
         return super.onOptionsItemSelected(item);
     }
-    //Inicializar DatePciker
     public void iniciarDatePicker(){
         fechanac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -400,6 +260,209 @@ public class InformacionPersonal extends AppCompatActivity {
         });
 
     }
+    //Metodo que carga el array personals con la info de los usuarios
+    private void loadDB(){
+        mdataBase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                personals.clear();
+                int access = 0;
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    if(ds.child("usuario").getValue().equals(user.getEmail())){
+                        access = Integer.parseInt(ds.child("acceso").getValue().toString());
+                    }
+                }
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    Log.i("Accses",ds.child("usuario").getValue().toString()+" == "+user.getEmail());
+                    if((access == 3) || (ds.child("usuario").getValue().toString().equals(user.getEmail()))) {
+                        Log.i("Accses",ds.child("usuario").toString());
+
+                        Personal personal = new Personal();
+                        try {
+                            personal.setReference(ds.getRef());
+                            personal.setUsuario(ds.child("usuario").getValue().toString());
+                            personal.setNombre(ds.child("nombre").getValue().toString());
+                            personal.setApellido(ds.child("apellido").getValue().toString());
+                            personal.setDomicilio(ds.child("domicilio").getValue().toString());
+                            personal.setNacimiento(new Fecha(Integer.parseInt(ds.child("nacimiento").child("dia").getValue().toString()), Integer.parseInt(ds.child("nacimiento").child("mes").getValue().toString()), Integer.parseInt(ds.child("nacimiento").child("ano").getValue().toString())));
+                            personal.setTelefono(ds.child("telefono").getValue().toString());
+                            //personal.setCind(new Fecha(Integer.parseInt(ds.child("CInd").child("Dia").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Mes").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Ano").getValue().toString())));
+                            personal.setIngreso(new Fecha(Integer.parseInt(ds.child("ingreso").child("dia").getValue().toString()), Integer.parseInt(ds.child("ingreso").child("mes").getValue().toString()), Integer.parseInt(ds.child("ingreso").child("ano").getValue().toString())));
+                            personal.setSeccion(ds.child("seccion").getValue().toString());
+                            personal.setCategoria(ds.child("categoria").getValue().toString());
+                            personal.setCredencial(ds.child("credencial").getValue().toString());
+                            personal.setCidnumero(ds.child("cid").child("numero").getValue().toString());
+                            personal.setCidvenc(new Fecha(Integer.parseInt(ds.child("cid").child("venc").child("dia").getValue().toString()), Integer.parseInt(ds.child("cid").child("venc").child("mes").getValue().toString()), Integer.parseInt(ds.child("cid").child("venc").child("ano").getValue().toString())));
+                            personal.setCSvenc(new Fecha(Integer.parseInt(ds.child("csalud").child("venc").child("dia").getValue().toString()), Integer.parseInt(ds.child("csalud").child("venc").child("mes").getValue().toString()), Integer.parseInt(ds.child("csalud").child("venc").child("ano").getValue().toString())));
+                            personal.setLCvenc(new Fecha(Integer.parseInt(ds.child("licenciaC").child("venc").child("dia").getValue().toString()), Integer.parseInt(ds.child("licenciaC").child("venc").child("mes").getValue().toString()), Integer.parseInt(ds.child("licenciaC").child("venc").child("ano").getValue().toString())));
+                            personal.setLCcategoria(ds.child("licenciaC").child("cat").getValue().toString());
+                            personal.setLCimagen(ds.child("licenciaC").child("imagen").getValue().toString());
+                            personal.setCidimagen(ds.child("cid").child("imagen").getValue().toString());
+                            personal.setCSimagen(ds.child("csalud").child("imagen").getValue().toString());
+                            personal.setPicture(ds.child("picture").getValue().toString());
+                            personals.add(personal);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                loadUsers(personals);
+                for (Personal ps : personals) {
+                    if (ps.getUsuario().equals(user.getEmail())) {
+                        Log.i("Usuario","Cargo"+user.getEmail());
+                        usuarios.setSelection(users.indexOf(user.getEmail()));
+                        cargarInfo(ps);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    //Metodo que carga el menu a partir de un objeto tipo Personal
+    private void cargarInfo(Personal personal){
+        nombre.setText(personal.getNombre());
+        Log.i("Usuario", personal.getNombre());
+        apellido.setText(personal.getApellido());
+        domicilio.setText(personal.getDomicilio());
+        fechanac.setText(personal.getNacimiento().toString());
+        telefono.setText(personal.getTelefono());
+       // charlainduc.setText(personal.getCind().toString());
+        fechaingreso.setText(personal.getIngreso().toString());
+        seccion.setText(personal.getSeccion());
+        categoria.setText(personal.getCategoria());
+        credencial.setText(personal.getCredencial());
+        numCI.setText(personal.getCid().numero);
+        vencCI.setText(personal.getCid().venc.toString());
+        vencCS.setText(personal.getCsalud().venc.toString());
+        vencLC.setText(personal.getLicenciaC().venc.toString());
+        catLC.setText(personal.getLicenciaC().cat);
+        Glide.with(getApplicationContext()).load(personal.getCid().imagen).into(ci);
+        Glide.with(getApplicationContext()).load(personal.getLicenciaC().imagen).into(lc);
+        Glide.with(getApplicationContext()).load(personal.getCsalud().imagen).into(cs);
+        Glide.with(getApplicationContext()).load(personal.getPicture()).into(pict);
+    }
+    //Metodo que carga el listado de usuarios
+    private void loadUsers(ArrayList<Personal> snapshot){
+        users.clear();
+        for(Personal ds : snapshot){
+            users.add(ds.getUsuario());
+        }
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, users);
+        usuarios.setAdapter(spinnerArrayAdapter);
+        usuarios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("Usuario","MeMeti");
+                for (Personal ps : personals) {
+                    if (ps.getUsuario().equals(usuarios.getItemAtPosition(position))) {
+                        cargarInfo(ps);
+                        Log.i("Usuario","Selecciono"+ps.getNombre());
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    //Metodo usado para agregar un usuario nuevo
+    private void usuarioNuevo(){
+        personal = new Personal();
+        editarInfo();
+        spinerUsuarios.setVisibility(View.GONE);
+        etUsuario.setVisibility(View.VISIBLE);
+        etContrasena.setVisibility(View.VISIBLE);
+        cargarInfo(personal);
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                personal = gurdarInfo(personal);
+                personal.setUsuario(usuario.getText().toString());
+                final FirebaseAuth newUser = FirebaseAuth.getInstance();
+                newUser.createUserWithEmailAndPassword(usuario.getText().toString(), contrasena.getText().toString())
+                        .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    mdataBase.push().setValue(personal);
+                                    activity.recreate();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                }
+                            }
+                        });
+            }
+        });
+    }
+    //Implementaciones del menu overflow
+    private void editarInfo(){
+        for(EditText et: editTexts){
+            et.setEnabled(true);
+            et.setTextIsSelectable(true);
+            et.setFocusable(true);
+            et.setFocusableInTouchMode(true);
+
+        }
+        agregarCI.setVisibility(View.VISIBLE);
+        agregarpicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, CameraScanDoc.class);
+                intent.putExtra("name","PIC");
+                intent.putExtra("user",usuarios.getSelectedItem().toString());
+                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+            }
+        });
+        agregarLC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, CameraScanDoc.class);
+                intent.putExtra("name","LC");
+                intent.putExtra("user",usuarios.getSelectedItem().toString());
+                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+            }
+        });
+        agregarCI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, CameraScanDoc.class);
+                intent.putExtra("name","CI");
+                intent.putExtra("user",usuarios.getSelectedItem().toString());
+                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+            }
+        });
+        agregarCS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, CameraScanDoc.class);
+                intent.putExtra("name","CS");
+                intent.putExtra("user",usuarios.getSelectedItem().toString());
+                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+            }
+        });
+        agregarCS.setVisibility(View.VISIBLE);
+        agregarLC.setVisibility(View.VISIBLE);
+        agregarpicture.setVisibility(View.VISIBLE);
+        guardar.setVisibility(View.VISIBLE);
+        fechanac.setTextIsSelectable(false);
+        fechaingreso.setTextIsSelectable(false);
+        vencCI.setTextIsSelectable(false);
+        vencLC.setTextIsSelectable(false);
+        vencCS.setTextIsSelectable(false);
+        iniciarDatePicker();
+    }
     //Obtiene los datos de los cuadros y los modifica de un personal existente
     public Personal gurdarInfo(Personal personal){
         personal.setNombre(nombre.getText().toString());
@@ -446,6 +509,26 @@ public class InformacionPersonal extends AppCompatActivity {
         personalReload.put("licenciaC/imagen",personal.getLicenciaC().imagen);
         personalReload.put("licenciaC/cat",personal.getLicenciaC().cat);
         personal.getReference().updateChildren(personalReload);
+
+    }
+    //private method of your class
+    private int getIndexSpinner(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+
+        return 0;
+    }
+    private void ajustarParamAcces(int access){
+        switch (access){
+            case 0: break;
+            case 1: break;
+            case 2: break;
+            case 3: break;
+
+        }
 
     }
 }

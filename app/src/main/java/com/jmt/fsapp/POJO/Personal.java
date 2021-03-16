@@ -35,6 +35,7 @@ public class Personal {
 
 
     public Personal() {
+        this.acceso = 0;
         this.nombre = "";
         this.apellido = "";
         this.picture = "https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201";

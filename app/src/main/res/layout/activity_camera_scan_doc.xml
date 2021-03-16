@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constrainLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -9,7 +10,8 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Capture"
-        app:layout_constraintBottom_toTopOf="@+id/tomarotraButon"
+        app:layout_constraintBottom_toBottomOf="@+id/tomarotraButon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -31,20 +33,32 @@
         android:layout_height="wrap_content"
         android:text="Salir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/tomarotraButon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tomar Otra"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/salircamaraButton"
+        app:layout_constraintEnd_toStartOf="@+id/captureBut" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <Button
+        android:id="@+id/guardarfoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Guardar"
+        app:layout_constraintBottom_toTopOf="@+id/salircamaraButton"
+        app:layout_constraintStart_toEndOf="@+id/captureBut" />
+
+    <ImageView
+        android:id="@+id/cuadro"
+        android:layout_height="260dp"
+        android:layout_width="400dp"
+        android:adjustViewBounds="true"
         android:src="@mipmap/objetivo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

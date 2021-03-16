@@ -17,6 +17,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     Camera camera;
     SurfaceHolder holder;
+    public Camera.Size size;
 
     public CameraPreview(Context context, Camera camera) {
         super(context);
@@ -30,8 +31,9 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         Camera.Parameters parameters = camera.getParameters();
         // Ajustar parametros de la camara
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-        if(this.getResources().getConfiguration().orientation!= Configuration.ORIENTATION_LANDSCAPE){
-            parameters.set("orientation","portrait");
+        if(this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE){
+            parameters.set("orientation", "portrait");
+            parameters.set("rotation",90);
             camera.setDisplayOrientation(90);
             parameters.setRotation(90);
         }else{
@@ -40,22 +42,59 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             parameters.setRotation(0);
         }
         camera.setParameters(parameters);
+        Log.i("Config",String.valueOf(this.getResources().getConfiguration().orientation));
         try {
+            // set preview size and make any resize, rotate or
+            // reformatting changes here
+
+            for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
+                float r = (float) size.width/size.height;
+                if (1920 >= size.width & (r >= 0.98) & (r <= (1.02))) {
+                    Log.i("Dim","A"+size.width+"L"+size.height);
+                    parameters.setPreviewSize(size.width,size.height);
+                    parameters.setPictureSize(size.width,size.height);
+                    break;
+                }
+            }
+            // Set parameters for camera
+            camera.setParameters(parameters);
             camera.setPreviewDisplay(holder);
             camera.startPreview();
-        } catch (IOException e) {
+            Camera.Size size1 = camera.getParameters().getPictureSize();
+            Log.i("PIC","A"+size1.width+"L"+size1.height);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        camera.setParameters(parameters);
     }
+
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            try {
+                Camera.Parameters parameters = camera.getParameters();
+                if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+                    parameters.set("orientation", "portrait");
+                    camera.setDisplayOrientation(90);
+                    parameters.setRotation(90);
+                    camera.setPreviewDisplay(holder);
+                    camera.startPreview();
+                }
+                else {
+                    // This is an undocumented although widely known feature
+                    parameters.set("orientation", "landscape");
+                    // For Android 2.2 and above
+                    camera.setDisplayOrientation(0);
+                    // Uncomment for Android 2.0 and above
+                    parameters.setRotation(0);
+                }
+                camera.setPreviewDisplay(holder);
+                camera.startPreview();
 
-    }
-
+            } catch (IOException e) {
+                // left blank for now
+            }
+        }
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
     }
 }
