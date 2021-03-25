@@ -10,7 +10,8 @@
         android:title="Ver Recibos de Sueldo" />
     <item
         android:id="@+id/menuAgregarUsuario"
-        android:title="Agregar Usuario" />
+        android:title="Agregar Usuario"
+        android:visible="false"/>
     <item
         android:id="@+id/menuitemSalir"
         android:title="Salir" />

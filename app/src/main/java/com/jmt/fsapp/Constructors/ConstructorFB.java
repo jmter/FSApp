@@ -68,10 +68,7 @@ public class ConstructorFB implements Constructor {
     public void loadUser(InformacionPersonal informacionPersonal){
     }
     public void modifieUser(Personal personal){    }
-    public Equipo obtEquipo(){
-        Equipo equipo = new Equipo();
-        return equipo;
-    }
+
     public void modiefieEquipo(Equipo equipo){    }
 }
 

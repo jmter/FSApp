@@ -20,7 +20,6 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/top_menu"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,12 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="top|center_horizontal"
-            android:text="Nombre del Menu"
+            android:text="Marca Modelo"
             android:textAlignment="center"
-            android:textSize="25dp"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="@+id/imageMenu"
             app:layout_constraintStart_toStartOf="@+id/imageMenu"
             app:layout_constraintTop_toBottomOf="@+id/imageMenu" />
+
+        <TextView
+            android:id="@+id/identity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top|center_horizontal"
+            android:text="ID:"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageMenu"
+            app:layout_constraintStart_toStartOf="@+id/imageMenu"
+            app:layout_constraintTop_toBottomOf="@+id/marcamodelo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

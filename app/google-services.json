@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "775371724038",
-    "project_id": "fsapp-b233f",
-    "storage_bucket": "fsapp-b233f.appspot.com"
+    "project_number": "160927907814",
+    "project_id": "loro-91dcd",
+    "storage_bucket": "loro-91dcd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:775371724038:android:c90e93f85a034efbecfa87",
+        "mobilesdk_app_id": "1:160927907814:android:b99f020f646e06f6996027",
         "android_client_info": {
-          "package_name": "com.jmt.fsapp"
+          "package_name": "com.jmt.smserver"
         }
       },
       "oauth_client": [
         {
-          "client_id": "775371724038-jajaibpe4tv0ur9lb85p27nb0l1itfpb.apps.googleusercontent.com",
+          "client_id": "160927907814-oabkeur35rm7v05of7hvj27lbr0gvka6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD0DpF9PAbuZG65ocx-d14irsfLuGoTEHs"
+          "current_key": "AIzaSyC6JMABJpzW40cLl6k0oPZR_PopB5-fkPA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "775371724038-jajaibpe4tv0ur9lb85p27nb0l1itfpb.apps.googleusercontent.com",
+              "client_id": "160927907814-oabkeur35rm7v05of7hvj27lbr0gvka6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

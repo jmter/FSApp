@@ -45,7 +45,7 @@ import java.util.Map;
 public class InformacionPersonal extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText nombre,apellido,domicilio,fechanac,telefono,charlainduc,fechaingreso,seccion,categoria,credencial,numCI,vencCI,vencCS,vencLC,catLC,usuario,contrasena;
-    private Button agregarpicture,rotarpicture,agregarCI,rotarCI,agregarLC,rotarLC,agregarCS,rotarCS,guardar;
+    private Button agregarpicture,agregarCI,agregarLC,agregarCS,guardar;
     private LinearLayout etUsuario,etContrasena,spinerUsuarios;
     private Spinner usuarios;
     private ArrayList<EditText> editTexts = new ArrayList<>();
@@ -55,8 +55,12 @@ public class InformacionPersonal extends AppCompatActivity {
     private DatabaseReference mdataBase;
     private FirebaseUser user;
     private Activity activity = this;
+    private int access;
     private ArrayList<String> users = new ArrayList<>();
-    static final int ASK_QUESTION_REQUEST = 0;
+    static final int ASK_QUESTION_REQUEST_EDIT = 0;
+    static final int ASK_QUESTION_REQUEST_NEW = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +75,7 @@ public class InformacionPersonal extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 1
-        if (requestCode == ASK_QUESTION_REQUEST) {
+        if (requestCode == ASK_QUESTION_REQUEST_EDIT) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 Log.i("CameraResult",data.getStringExtra("URL"));
@@ -172,6 +176,10 @@ public class InformacionPersonal extends AppCompatActivity {
         }
 
     }
+    public boolean onPrepareOptionsMenu (Menu menu){
+        ajustarParamAcces(menu);
+        return true;
+    }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menuoverflow,menu);
         return true;
@@ -266,7 +274,7 @@ public class InformacionPersonal extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 personals.clear();
-                int access = 0;
+                access = 0;
                 for (DataSnapshot ds : snapshot.getChildren()){
                     if(ds.child("usuario").getValue().equals(user.getEmail())){
                         access = Integer.parseInt(ds.child("acceso").getValue().toString());
@@ -315,7 +323,6 @@ public class InformacionPersonal extends AppCompatActivity {
                         cargarInfo(ps);
                     }
                 }
-
             }
 
             @Override
@@ -413,6 +420,22 @@ public class InformacionPersonal extends AppCompatActivity {
             et.setTextIsSelectable(true);
             et.setFocusable(true);
             et.setFocusableInTouchMode(true);
+        }
+        if (access !=3 ){
+            fechaingreso.setEnabled(false);
+            fechaingreso.setTextIsSelectable(false);
+            fechaingreso.setFocusable(false);
+            fechaingreso.setFocusableInTouchMode(false);
+
+            seccion.setEnabled(false);
+            seccion.setTextIsSelectable(false);
+            seccion.setFocusable(false);
+            seccion.setFocusableInTouchMode(false);
+
+            categoria.setEnabled(false);
+            categoria.setTextIsSelectable(false);
+            categoria.setFocusable(false);
+            categoria.setFocusableInTouchMode(false);
 
         }
         agregarCI.setVisibility(View.VISIBLE);
@@ -422,7 +445,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 Intent intent = new Intent(activity, CameraScanDoc.class);
                 intent.putExtra("name","PIC");
                 intent.putExtra("user",usuarios.getSelectedItem().toString());
-                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+                startActivityForResult(intent, ASK_QUESTION_REQUEST_EDIT);
             }
         });
         agregarLC.setOnClickListener(new View.OnClickListener() {
@@ -431,7 +454,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 Intent intent = new Intent(activity, CameraScanDoc.class);
                 intent.putExtra("name","LC");
                 intent.putExtra("user",usuarios.getSelectedItem().toString());
-                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+                startActivityForResult(intent, ASK_QUESTION_REQUEST_EDIT);
             }
         });
         agregarCI.setOnClickListener(new View.OnClickListener() {
@@ -440,7 +463,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 Intent intent = new Intent(activity, CameraScanDoc.class);
                 intent.putExtra("name","CI");
                 intent.putExtra("user",usuarios.getSelectedItem().toString());
-                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+                startActivityForResult(intent, ASK_QUESTION_REQUEST_EDIT);
             }
         });
         agregarCS.setOnClickListener(new View.OnClickListener() {
@@ -449,7 +472,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 Intent intent = new Intent(activity, CameraScanDoc.class);
                 intent.putExtra("name","CS");
                 intent.putExtra("user",usuarios.getSelectedItem().toString());
-                startActivityForResult(intent,ASK_QUESTION_REQUEST);
+                startActivityForResult(intent, ASK_QUESTION_REQUEST_EDIT);
             }
         });
         agregarCS.setVisibility(View.VISIBLE);
@@ -521,12 +544,17 @@ public class InformacionPersonal extends AppCompatActivity {
 
         return 0;
     }
-    private void ajustarParamAcces(int access){
+    private void ajustarParamAcces(Menu menu){
         switch (access){
-            case 0: break;
-            case 1: break;
-            case 2: break;
-            case 3: break;
+            case 0 :
+            case 1:
+            case 2:
+
+            break;
+            case 3:
+                menu.findItem(R.id.menuAgregarUsuario).setVisible(true);
+                spinerUsuarios.setVisibility(View.VISIBLE);
+            break;
 
         }
 

@@ -28,7 +28,6 @@ public interface Constructor {
     void loadBv(TextView textView);
     void loadUser(InformacionPersonal informacionPersonal);
     void modifieUser(Personal personal);
-    Equipo obtEquipo();
     void modiefieEquipo(Equipo equipo);
 
 }
