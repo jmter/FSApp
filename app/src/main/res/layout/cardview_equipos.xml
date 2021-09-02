@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageMenu"
+            android:id="@+id/imageEquipo"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
@@ -30,10 +30,10 @@
             android:gravity="top|center_horizontal"
             android:text="Marca Modelo"
             android:textAlignment="center"
-            android:textSize="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageMenu"
-            app:layout_constraintStart_toStartOf="@+id/imageMenu"
-            app:layout_constraintTop_toBottomOf="@+id/imageMenu" />
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageEquipo"
+            app:layout_constraintStart_toStartOf="@+id/imageEquipo"
+            app:layout_constraintTop_toBottomOf="@+id/imageEquipo" />
 
         <TextView
             android:id="@+id/identity"
@@ -42,9 +42,9 @@
             android:gravity="top|center_horizontal"
             android:text="ID:"
             android:textAlignment="center"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageMenu"
-            app:layout_constraintStart_toStartOf="@+id/imageMenu"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageEquipo"
+            app:layout_constraintStart_toStartOf="@+id/imageEquipo"
             app:layout_constraintTop_toBottomOf="@+id/marcamodelo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

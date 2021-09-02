@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageMenu"
+            android:id="@+id/imageEquipo"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
@@ -32,9 +32,9 @@
             android:text="Nombre del Menu"
             android:textAlignment="center"
             android:textSize="25dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageMenu"
-            app:layout_constraintStart_toStartOf="@+id/imageMenu"
-            app:layout_constraintTop_toBottomOf="@+id/imageMenu" />
+            app:layout_constraintEnd_toEndOf="@+id/imageEquipo"
+            app:layout_constraintStart_toStartOf="@+id/imageEquipo"
+            app:layout_constraintTop_toBottomOf="@+id/imageEquipo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

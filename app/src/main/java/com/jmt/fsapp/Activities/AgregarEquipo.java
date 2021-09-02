@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,10 +37,8 @@ import com.google.firebase.storage.UploadTask;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.R;
 
-import java.net.URI;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AgregarEquipo extends AppCompatActivity {
     private Activity activity = this;
@@ -92,6 +91,7 @@ public class AgregarEquipo extends AppCompatActivity {
                                         equipo.setCategoria(categoria.getSelectedItem().toString());
                                         equipo.setSubcategoria(subcategoria.getSelectedItem().toString());
                                         equipo.setPreid(obtenerProxID(equipos,categoria.getSelectedItem().toString(),subcategoria.getSelectedItem().toString()));
+                                        Log.i("Categoria","id"+equipo.getId());
                                         identity.setText(equipo.getId());
                                     }
 
@@ -116,12 +116,12 @@ public class AgregarEquipo extends AppCompatActivity {
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menuoverflow_maquinas,menu);
-        menu.findItem(R.id.menuAgregarMaquina).setVisible(false);
+        menu.findItem(R.id.menuEditarMaquina).setVisible(false);
         return true;
     }
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.menuAgregarMaquina){
+        if(id == R.id.menuEditarMaquina){
 
         }
         if(id == R.id.menuSalir){
@@ -171,38 +171,39 @@ public class AgregarEquipo extends AppCompatActivity {
         equipo.setModelo(this.modelo.getText().toString());
         equipo.setCategoria(this.categoria.getSelectedItem().toString());
         equipo.setSubcategoria(this.subcategoria.getSelectedItem().toString());
-
-        if(path != null) {
-            storageRef = storageRef.child("Equipos/" + equipo.getId() + "/" + "Picture");
-            UploadTask uploadTask = storageRef.putFile(path);
-            final Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    // Continue with the task to get the download URL
-                    return storageRef.getDownloadUrl();
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        byte[] data = baos.toByteArray();
+        storageRef = storageRef.child("Equipos/" + equipo.getId() + "/" + "Picture");
+        UploadTask uploadTask = storageRef.putBytes(data);
+        final Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        equipo.setFoto(downloadUri.toString());
-                        databaseReference.child(equipo.getCategoria()).child(equipo.getSubcategoria()).child(equipo.getId()).setValue(equipo);
-                    } else {
-                        // Handle failures
-                        // ...
-                    }
+
+                // Continue with the task to get the download URL
+                return storageRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    Log.i("Download",downloadUri.toString());
+                    equipo.setFoto(downloadUri.toString());
+                    databaseReference.child(equipo.getCategoria()).child(equipo.getSubcategoria()).child(equipo.getId()).setValue(equipo);
+                } else {
+                    // Handle failures
+                    // ...
                 }
-            });
-        }else {
-            equipo.setFoto("https://firebasestorage.googleapis.com/v0/b/fsapp-b233f.appspot.com/o/sin%20imagen.jpg?alt=media&token=a78f6e9d-295d-4623-a6ac-579ff6301201");
-            databaseReference.child(equipo.getCategoria()).child(equipo.getSubcategoria()).child(equipo.getId()).setValue(equipo);
-        }
-        Intent intent = new Intent(this,Equipos.class);
+            }
+        });
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         finish();
 

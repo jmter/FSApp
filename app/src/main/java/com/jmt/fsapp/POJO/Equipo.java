@@ -1,5 +1,6 @@
 package com.jmt.fsapp.POJO;
 
+import android.util.Log;
 import android.widget.Switch;
 
 import com.jmt.fsapp.datatype.Dim;
@@ -32,6 +33,10 @@ public class Equipo {
 
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -42,11 +47,12 @@ public class Equipo {
 
     public void setPreid(int preid) {
         this.preid = preid;
+        Log.i("Preid",categoria+"  "+subcategoria);
         switch (categoria){
             case "Maquinaria vial":
                 switch (subcategoria){
                     case "Motoniveladoras": this.id = "MVM"+preid; break;
-                    case "Compactadores":this.id = "MVC"+preid; break;
+                    case "Compactadores":this.id = "MVR"+preid; break;
                     case "Barredoras":this.id = "MVB"+preid; break;
                     case "Gravilladoras":this.id = "MVG"+preid; break;
                     case "Retroexcavadoras":this.id = "MVE"+preid; break;
@@ -54,7 +60,7 @@ public class Equipo {
                     case "Palas": this.id = "MVP"+preid; break;
                 }
                 break;
-            case "Autos y camionetas":
+            case "Camionetas y autos":
                 switch (subcategoria) {
                     case "Autos": this.id = "AA"+preid; break;
                     case "Camionetas": this.id = "CC"+preid;break;
@@ -81,6 +87,88 @@ public class Equipo {
         }
     }
 
+    public void reverseID(String id){
+        preid = Integer.valueOf(id.replaceAll("[^\\d.]", ""));
+        String cat = id.replaceAll("\\d","");
+        switch (cat){
+            case "MVM":
+                categoria = "Maquinaria vial";
+                subcategoria = "Motoniveladoras";
+                break;
+            case "MVR":
+                categoria = "Maquinaria vial";
+                subcategoria = "Compactadores";
+                break;
+            case "MVB":
+                categoria = "Maquinaria vial";
+                subcategoria = "Barredoras";
+                break;
+            case "MVG":
+                categoria = "Maquinaria vial";
+                subcategoria = "Gravilladoras";
+                break;
+            case "MVE":
+                categoria = "Maquinaria vial";
+                subcategoria = "Retroexcavadoras";
+                break;
+            case "MVC":
+                categoria = "Maquinaria vial";
+                subcategoria = "Combinadas";
+                break;
+            case "MVP":
+                categoria = "Maquinaria vial";
+                subcategoria = "Palas";
+                break;
+            case "AA":
+                categoria = "Autos y camionetas";
+                subcategoria = "Autos";
+                break;
+            case "CC":
+                categoria = "Autos y camionetas";
+                subcategoria = "Camionetas";
+                break;
+            case "CT":
+                categoria = "Camiones";
+                subcategoria = "Transporte";
+                break;
+            case "CE": ;
+                categoria = "Camiones";
+                subcategoria = "Especiales";
+                break;
+            case "TH":
+                categoria = "Tanques";
+                subcategoria = "Asfalto";
+                break;
+            case "TA":
+                categoria = "Tanques";
+                subcategoria = "Agua";
+                break;
+            case "TG":
+                categoria = "Tanques";
+                subcategoria = "Gasoil";
+                break;
+            case "EMB":
+                categoria = "Equipos menores";
+                subcategoria = "Bombas";
+                break;
+            case "EMG":
+                categoria = "Equipos menores";
+                subcategoria = "Generadores";
+                break;
+            case "EMV":
+                categoria = "Equipos menores";
+                subcategoria = "Vibradores";
+                break;
+            case "EMP":
+                categoria = "Equipos menores";
+                subcategoria = "Planchas";
+                break;
+            case "EMA":
+                categoria = "Equipos menores";
+                subcategoria = "Aserradoras";
+                break;
+        }
+    }
 
     public String getMarca() {
         return marca;

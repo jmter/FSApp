@@ -2,6 +2,7 @@ package com.jmt.fsapp.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.jmt.fsapp.POJO.Equipo;
-import com.jmt.fsapp.POJO.Menus;
 import com.jmt.fsapp.R;
 
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 // Adaptador para recycler view de  menu
 
 public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.AdapterViewHolder> {
@@ -45,23 +47,17 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.AdapterV
     public void onBindViewHolder(@NonNull final AdapterViewHolder adapterViewHolder, int position) {
         final Equipo equipo = equipos.get(position);
         Glide.with(activity).load(equipo.getFoto()).into(adapterViewHolder.imagen);
-        adapterViewHolder.marcamodelo.setText(equipo.getMarca()+equipo.getModelo());
+        adapterViewHolder.marcamodelo.setText(equipo.getMarca()+" "+equipo.getModelo());
         adapterViewHolder.identity.setText(equipo.getId());
-//        adapterViewHolder.layoutCV.setOnClickListener(new View.OnClickListener() {
-//              @Override
-//              public void onClick(View v) {
-//                  Intent intent = null;
-//                  try {
-//                      intent = new Intent(activity, Class.forName(menu.getIntent()));
-//
-//                  } catch (ClassNotFoundException e) {
-//                  }
-//                  if (intent != null){
-//                      activity.finish();
-//                      activity.startActivity(intent);
-//                  }
-//              }
-//          });
+        adapterViewHolder.layoutCV.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent();
+                  intent.putExtra("id",equipo.getId());
+                  activity.setResult(RESULT_OK,intent);
+                  activity.finish();
+              }
+          });
 
     }
     @Override
@@ -79,7 +75,7 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.AdapterV
 
         public AdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            imagen  = (ImageView) itemView.findViewById(R.id.imageMenu);
+            imagen  = (ImageView) itemView.findViewById(R.id.imageEquipo);
             marcamodelo  = (TextView) itemView.findViewById(R.id.marcamodelo);
             identity = (TextView) itemView.findViewById(R.id.identity);
             layoutCV  = (ConstraintLayout) itemView.findViewById(R.id.layoutCV);

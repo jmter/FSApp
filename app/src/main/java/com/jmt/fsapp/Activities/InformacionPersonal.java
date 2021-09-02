@@ -68,7 +68,7 @@ public class InformacionPersonal extends AppCompatActivity {
         mdataBase = FirebaseDatabase.getInstance().getReference().child("Usuarios");
         user = FirebaseAuth.getInstance().getCurrentUser();
         iniciarGraficos();
-        Log.i("Usuario", "Inicio"+user.getEmail());
+        Log.i("Usuario", "Oncreate");
         loadDB();
     }
     @Override
@@ -190,7 +190,7 @@ public class InformacionPersonal extends AppCompatActivity {
             editarInfo();
         }
         if(id == R.id.itemmenurecibo){
-            Log.i("MENU","El segundo");
+
         }
         if(id == R.id.menuAgregarUsuario){
             usuarioNuevo();
@@ -199,7 +199,7 @@ public class InformacionPersonal extends AppCompatActivity {
             Intent intent = new Intent(activity,MainActivity.class);
             startActivity(intent);
             finish();
-            Log.i("MENU","El tercero");
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -276,38 +276,41 @@ public class InformacionPersonal extends AppCompatActivity {
                 personals.clear();
                 access = 0;
                 for (DataSnapshot ds : snapshot.getChildren()){
-                    if(ds.child("usuario").getValue().equals(user.getEmail())){
-                        access = Integer.parseInt(ds.child("acceso").getValue().toString());
+                    for (DataSnapshot sd : ds.getChildren()){
+                        if (sd.child("usuario").getValue().equals(user.getEmail())) {
+                            access = Integer.parseInt(sd.child("acceso").getValue().toString());
+                        }
                     }
                 }
                 for(DataSnapshot ds : snapshot.getChildren()){
-                    Log.i("Accses",ds.child("usuario").getValue().toString()+" == "+user.getEmail());
-                    if((access == 3) || (ds.child("usuario").getValue().toString().equals(user.getEmail()))) {
-                        Log.i("Accses",ds.child("usuario").toString());
+                    for(DataSnapshot sd : ds.getChildren()){
+                    Log.i("Accses",sd.child("usuario").getValue().toString()+" == "+user.getEmail());
+                    if((access == 3) || (sd.child("usuario").getValue().toString().equals(user.getEmail()))) {
+                        Log.i("Accses",sd.child("usuario").toString());
 
                         Personal personal = new Personal();
                         try {
-                            personal.setReference(ds.getRef());
-                            personal.setUsuario(ds.child("usuario").getValue().toString());
-                            personal.setNombre(ds.child("nombre").getValue().toString());
-                            personal.setApellido(ds.child("apellido").getValue().toString());
-                            personal.setDomicilio(ds.child("domicilio").getValue().toString());
-                            personal.setNacimiento(new Fecha(Integer.parseInt(ds.child("nacimiento").child("dia").getValue().toString()), Integer.parseInt(ds.child("nacimiento").child("mes").getValue().toString()), Integer.parseInt(ds.child("nacimiento").child("ano").getValue().toString())));
-                            personal.setTelefono(ds.child("telefono").getValue().toString());
+                            personal.setReference(sd.getRef());
+                            personal.setUsuario(sd.child("usuario").getValue().toString());
+                            personal.setNombre(sd.child("nombre").getValue().toString());
+                            personal.setApellido(sd.child("apellido").getValue().toString());
+                            personal.setDomicilio(sd.child("domicilio").getValue().toString());
+                            personal.setNacimiento(new Fecha(Integer.parseInt(sd.child("nacimiento").child("dia").getValue().toString()), Integer.parseInt(sd.child("nacimiento").child("mes").getValue().toString()), Integer.parseInt(sd.child("nacimiento").child("ano").getValue().toString())));
+                            personal.setTelefono(sd.child("telefono").getValue().toString());
                             //personal.setCind(new Fecha(Integer.parseInt(ds.child("CInd").child("Dia").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Mes").getValue().toString()),Integer.parseInt(ds.child("CInd").child("Ano").getValue().toString())));
-                            personal.setIngreso(new Fecha(Integer.parseInt(ds.child("ingreso").child("dia").getValue().toString()), Integer.parseInt(ds.child("ingreso").child("mes").getValue().toString()), Integer.parseInt(ds.child("ingreso").child("ano").getValue().toString())));
-                            personal.setSeccion(ds.child("seccion").getValue().toString());
-                            personal.setCategoria(ds.child("categoria").getValue().toString());
-                            personal.setCredencial(ds.child("credencial").getValue().toString());
-                            personal.setCidnumero(ds.child("cid").child("numero").getValue().toString());
-                            personal.setCidvenc(new Fecha(Integer.parseInt(ds.child("cid").child("venc").child("dia").getValue().toString()), Integer.parseInt(ds.child("cid").child("venc").child("mes").getValue().toString()), Integer.parseInt(ds.child("cid").child("venc").child("ano").getValue().toString())));
-                            personal.setCSvenc(new Fecha(Integer.parseInt(ds.child("csalud").child("venc").child("dia").getValue().toString()), Integer.parseInt(ds.child("csalud").child("venc").child("mes").getValue().toString()), Integer.parseInt(ds.child("csalud").child("venc").child("ano").getValue().toString())));
-                            personal.setLCvenc(new Fecha(Integer.parseInt(ds.child("licenciaC").child("venc").child("dia").getValue().toString()), Integer.parseInt(ds.child("licenciaC").child("venc").child("mes").getValue().toString()), Integer.parseInt(ds.child("licenciaC").child("venc").child("ano").getValue().toString())));
-                            personal.setLCcategoria(ds.child("licenciaC").child("cat").getValue().toString());
-                            personal.setLCimagen(ds.child("licenciaC").child("imagen").getValue().toString());
-                            personal.setCidimagen(ds.child("cid").child("imagen").getValue().toString());
-                            personal.setCSimagen(ds.child("csalud").child("imagen").getValue().toString());
-                            personal.setPicture(ds.child("picture").getValue().toString());
+                            personal.setIngreso(new Fecha(Integer.parseInt(sd.child("ingreso").child("dia").getValue().toString()), Integer.parseInt(sd.child("ingreso").child("mes").getValue().toString()), Integer.parseInt(sd.child("ingreso").child("ano").getValue().toString())));
+                            personal.setSeccion(sd.child("seccion").getValue().toString());
+                            personal.setCategoria(sd.child("categoria").getValue().toString());
+                            personal.setCredencial(sd.child("credencial").getValue().toString());
+                            personal.setCidnumero(sd.child("cid").child("numero").getValue().toString());
+                            personal.setCidvenc(new Fecha(Integer.parseInt(sd.child("cid").child("venc").child("dia").getValue().toString()), Integer.parseInt(sd.child("cid").child("venc").child("mes").getValue().toString()), Integer.parseInt(sd.child("cid").child("venc").child("ano").getValue().toString())));
+                            personal.setCSvenc(new Fecha(Integer.parseInt(sd.child("csalud").child("venc").child("dia").getValue().toString()), Integer.parseInt(sd.child("csalud").child("venc").child("mes").getValue().toString()), Integer.parseInt(sd.child("csalud").child("venc").child("ano").getValue().toString())));
+                            personal.setLCvenc(new Fecha(Integer.parseInt(sd.child("licenciaC").child("venc").child("dia").getValue().toString()), Integer.parseInt(sd.child("licenciaC").child("venc").child("mes").getValue().toString()), Integer.parseInt(sd.child("licenciaC").child("venc").child("ano").getValue().toString())));
+                            personal.setLCcategoria(sd.child("licenciaC").child("cat").getValue().toString());
+                            personal.setLCimagen(sd.child("licenciaC").child("imagen").getValue().toString());
+                            personal.setCidimagen(sd.child("cid").child("imagen").getValue().toString());
+                            personal.setCSimagen(sd.child("csalud").child("imagen").getValue().toString());
+                            personal.setPicture(sd.child("picture").getValue().toString());
                             personals.add(personal);
 
                         } catch (Exception e) {
@@ -323,7 +326,7 @@ public class InformacionPersonal extends AppCompatActivity {
                         cargarInfo(ps);
                     }
                 }
-            }
+            }}
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -403,7 +406,7 @@ public class InformacionPersonal extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    mdataBase.push().setValue(personal);
+                                    mdataBase.child(String.valueOf(personal.getAcceso())).push().setValue(personal);
                                     activity.recreate();
                                 } else {
                                     // If sign in fails, display a message to the user.

@@ -1,7 +1,6 @@
 package com.jmt.fsapp.Constructors;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,46 +13,43 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jmt.fsapp.Activities.InformacionPersonal;
 import com.jmt.fsapp.Adapter.MenusAdapter;
+import com.jmt.fsapp.Adapter.PreguntasPDAdapter;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.POJO.Menus;
 import com.jmt.fsapp.POJO.Personal;
 
 import java.util.ArrayList;
 
-public class ConstructorFB implements Constructor {
+public class ConstructorPreguntasPD  {
     private DatabaseReference mdataBase;
-    private ArrayList<Menus> menus = new ArrayList();
-    private RecyclerView menuRV;
-    private Integer auth;
+    private ArrayList<String> preguntas = new ArrayList();
+    private RecyclerView partedeMaquinaRV;
     Activity activity;
-    MenusAdapter adaptador;
+    PreguntasPDAdapter adaptador;
 
     //Constructores
-    public ConstructorFB() {
+    public ConstructorPreguntasPD() {
     }
 
-    public ConstructorFB(RecyclerView menuRV, Activity activity, Integer auth) {
-        this.menuRV = menuRV;
+    public ConstructorPreguntasPD(RecyclerView partedeMaquinaRV, Activity activity) {
+        this.partedeMaquinaRV = partedeMaquinaRV;
         this.activity = activity;
-        this.auth = auth;
-        adaptador = new MenusAdapter(menus,activity,auth);
+        adaptador = new PreguntasPDAdapter(preguntas,activity);
     }
 
     //Metodos interfaz
-    public void loadMenus(){
-        mdataBase = FirebaseDatabase.getInstance().getReference().child("Menus");
+    public void loadPreguntas(){
+        mdataBase = FirebaseDatabase.getInstance().getReference().child("PreguntasPD");
         mdataBase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    menus.clear();
+                    preguntas.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        if(auth >= Integer.valueOf(ds.child("AuthR").getValue().toString()) ) {
-                            menus.add(new Menus(ds.child("Name").getValue().toString(), ds.child("Imagen").getValue().toString(), ds.child("Intent").getValue().toString(), Integer.valueOf(ds.child("AuthR").getValue().toString())));
+                        preguntas.add(ds.child("Pregunta").getValue().toString());
                         }
-                        }
-                    adaptador.setMenus(menus);
-                    menuRV.setAdapter(adaptador);
+                    adaptador.setPreguntas(preguntas);
+                    partedeMaquinaRV.setAdapter(adaptador);
 
                 }
             }
@@ -65,15 +61,5 @@ public class ConstructorFB implements Constructor {
         });
     }
 
-    @Override
-    public void loadBv(TextView textView) {
-
-    }
-
-    public void loadUser(InformacionPersonal informacionPersonal){
-    }
-    public void modifieUser(Personal personal){    }
-
-    public void modiefieEquipo(Equipo equipo){    }
 }
 

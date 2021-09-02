@@ -6,6 +6,7 @@ public class Menus {
     private String nombre;
     private String imagen;
     private String intent;
+    private Integer authR;
 
     public Menus(String nombre){
         this.nombre = nombre;
@@ -20,6 +21,13 @@ public class Menus {
         this.nombre = nombre;
         this.imagen = imagen;
         this.intent = intent;
+    }
+
+    public Menus(String nombre, String imagen, String intent, Integer authR) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.intent = intent;
+        this.authR = authR;
     }
 
     @NonNull

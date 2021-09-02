@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jmt.fsapp.Adapter.EquiposAdapter;
-import com.jmt.fsapp.Adapter.MenusAdapter;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.R;
 
@@ -52,16 +50,6 @@ public class Equipos extends AppCompatActivity {
 
         iniciarGraficos();
         setUpSpinner();
-        readData(new FirebaseCallback() {
-            @Override
-            public void onCallback(ArrayList<Equipo> equipos, ArrayList<ArrayList<String>> categorias) {
-                Log.i("Equipo", equipos.toString());
-                if(equipos.size()>0) {
-                    EquiposAdapter adaptador = new EquiposAdapter(equipos, activity);
-                    equipoRV.setAdapter(adaptador);
-                }
-            }
-        });
 
 
     }
@@ -80,14 +68,13 @@ public class Equipos extends AppCompatActivity {
     }
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.menuAgregarMaquina){
+        if(id == R.id.menuEditarMaquina){
             Intent intent = new Intent(activity,AgregarEquipo.class);
             startActivity(intent);
             finish();
         }
         if(id == R.id.menuSalir){
-            Intent intent = new Intent(activity,MainActivity.class);
-            startActivity(intent);
+            setResult(RESULT_CANCELED);
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -113,7 +100,9 @@ public class Equipos extends AppCompatActivity {
                             if (!eq.getKey().equals("Vacio")) {
                                 Equipo equipo = new Equipo(eq.child("marca").getValue().toString(), eq.child("modelo").getValue().toString(), eq.child("categoria").getValue().toString(), eq.child("subcategoria").getValue().toString());
                                 equipo.setPreid(Integer.valueOf(eq.child("preid").getValue().toString()));
+                                equipo.setFoto(eq.child("foto").getValue().toString());
                                 equipos.add(equipo);
+
                             }
                         }
                     }
@@ -162,7 +151,8 @@ public class Equipos extends AppCompatActivity {
                                 subcategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                                        EquiposAdapter adaptador = new EquiposAdapter(obtenerEquiposCat(equipos,categoria.getSelectedItem().toString(),subcategoria.getSelectedItem().toString()), activity);
+                                        equipoRV.setAdapter(adaptador);
                                     }
 
                                     @Override
@@ -184,5 +174,18 @@ public class Equipos extends AppCompatActivity {
             }
         });
 
+    }
+    private ArrayList<Equipo> obtenerEquiposCat(ArrayList<Equipo> equipos,String categoria,String subcategoria){
+        ArrayList<Equipo> editedEquipos = new ArrayList<>();
+        if( categoria.equals("Todos")){
+            editedEquipos = (ArrayList<Equipo>) equipos.clone();
+        }else {
+            for (Equipo eq : equipos) {
+                if (eq.getCategoria().equals(categoria) & eq.getSubcategoria().equals(subcategoria)) {
+                    editedEquipos.add(eq);
+                }
+            }
+        }
+        return editedEquipos;
     }
 }

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menuEditarMaquina"
-        android:title="Agregar Maquina" />
+        android:title="Editar Maquina" />
     <item
         android:id="@+id/menuSalir"
         android:title="Salir" />

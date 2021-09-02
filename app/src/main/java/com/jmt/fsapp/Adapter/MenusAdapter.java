@@ -22,10 +22,12 @@ import java.util.ArrayList;
 public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewHolder> {
     private ArrayList<Menus> menus;
     private Activity activity;
+    private Integer auth;
 
-    public MenusAdapter(ArrayList<Menus> menus ,Activity activity){
+    public MenusAdapter(ArrayList<Menus> menus ,Activity activity, Integer auth){
         this.menus = menus;
         this.activity = activity;
+        this.auth = auth;
 
     }
 
@@ -76,7 +78,7 @@ public class MenusAdapter extends RecyclerView.Adapter<MenusAdapter.AdapterViewH
 
         public AdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            imagen  = (ImageView) itemView.findViewById(R.id.imageMenu);
+            imagen  = (ImageView) itemView.findViewById(R.id.imageEquipo);
             nombre  = (TextView) itemView.findViewById(R.id.marcamodelo);
             layoutCV  = (ConstraintLayout) itemView.findViewById(R.id.layoutCV);
 

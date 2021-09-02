@@ -3,9 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuEditarMaquina"
-        android:title="Agregar Maquina" />
-    <item
         android:id="@+id/menuSalir"
         android:title="Salir" />
 </menu>
