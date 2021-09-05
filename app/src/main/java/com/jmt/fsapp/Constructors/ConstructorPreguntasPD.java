@@ -38,7 +38,7 @@ public class ConstructorPreguntasPD  {
     }
 
     //Metodos interfaz
-    public void loadPreguntas(){
+    public ArrayList<String> loadPreguntas(){
         mdataBase = FirebaseDatabase.getInstance().getReference().child("PreguntasPD");
         mdataBase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -59,6 +59,7 @@ public class ConstructorPreguntasPD  {
 
             }
         });
+        return preguntas;
     }
 
 }
