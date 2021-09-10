@@ -68,7 +68,6 @@ public class InformacionPersonal extends AppCompatActivity {
         mdataBase = FirebaseDatabase.getInstance().getReference().child("Usuarios");
         user = FirebaseAuth.getInstance().getCurrentUser();
         iniciarGraficos();
-        Log.i("Usuario", "Oncreate");
         loadDB();
     }
     @Override
@@ -78,7 +77,6 @@ public class InformacionPersonal extends AppCompatActivity {
         if (requestCode == ASK_QUESTION_REQUEST_EDIT) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                Log.i("CameraResult",data.getStringExtra("URL"));
                 usuarios.setSelection(getIndexSpinner(usuarios,data.getStringExtra("user")));
                 for(Personal ps: personals){
                     if(data.getStringExtra("user").equals(ps.getUsuario())){
@@ -286,7 +284,6 @@ public class InformacionPersonal extends AppCompatActivity {
                     for(DataSnapshot sd : ds.getChildren()){
                     Log.i("Accses",sd.child("usuario").getValue().toString()+" == "+user.getEmail());
                     if((access == 3) || (sd.child("usuario").getValue().toString().equals(user.getEmail()))) {
-                        Log.i("Accses",sd.child("usuario").toString());
 
                         Personal personal = new Personal();
                         try {
@@ -321,7 +318,6 @@ public class InformacionPersonal extends AppCompatActivity {
                 loadUsers(personals);
                 for (Personal ps : personals) {
                     if (ps.getUsuario().equals(user.getEmail())) {
-                        Log.i("Usuario","Cargo"+user.getEmail());
                         usuarios.setSelection(users.indexOf(user.getEmail()));
                         cargarInfo(ps);
                     }
@@ -338,7 +334,6 @@ public class InformacionPersonal extends AppCompatActivity {
     //Metodo que carga el menu a partir de un objeto tipo Personal
     private void cargarInfo(Personal personal){
         nombre.setText(personal.getNombre());
-        Log.i("Usuario", personal.getNombre());
         apellido.setText(personal.getApellido());
         domicilio.setText(personal.getDomicilio());
         fechanac.setText(personal.getNacimiento().toString());
@@ -371,11 +366,9 @@ public class InformacionPersonal extends AppCompatActivity {
         usuarios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("Usuario","MeMeti");
                 for (Personal ps : personals) {
                     if (ps.getUsuario().equals(usuarios.getItemAtPosition(position))) {
                         cargarInfo(ps);
-                        Log.i("Usuario","Selecciono"+ps.getNombre());
                         break;
                     }
                 }

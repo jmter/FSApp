@@ -47,7 +47,6 @@ public class Equipo {
 
     public void setPreid(int preid) {
         this.preid = preid;
-        Log.i("Preid",categoria+"  "+subcategoria);
         switch (categoria){
             case "Maquinaria vial":
                 switch (subcategoria){
@@ -120,11 +119,11 @@ public class Equipo {
                 subcategoria = "Palas";
                 break;
             case "AA":
-                categoria = "Autos y camionetas";
+                categoria = "Camionetas y autos";
                 subcategoria = "Autos";
                 break;
             case "CC":
-                categoria = "Autos y camionetas";
+                categoria = "Camionetas y autos";
                 subcategoria = "Camionetas";
                 break;
             case "CT":

@@ -103,13 +103,18 @@ public class PerfilEquipo extends AppCompatActivity {
 
                 }
             });
-            Log.i("Equipo","Cat "+equipo.getCategoria()+" Sub "+equipo.getSubcategoria()+" Preid "+equipo.getPreid());
         }else {
             Intent intent = new Intent(activity,MainActivity.class);
             startActivity(intent);
             finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(activity,Equipos.class);
+        startActivity(intent);
+        finish();
     }
     private void readData(final FirebaseCallback firebaseCallback){
 

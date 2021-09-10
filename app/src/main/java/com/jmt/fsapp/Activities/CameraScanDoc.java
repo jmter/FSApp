@@ -4,9 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -60,6 +64,7 @@ public class CameraScanDoc extends AppCompatActivity {
     @Override
         public void onCreate(Bundle savedInstanceState) {
 
+            checkCameraPermission();
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_camera_scan_doc);
             IniciarGrafico();
@@ -105,10 +110,8 @@ public class CameraScanDoc extends AppCompatActivity {
                     }
                 });
 
-                Log.i("Camara","bitmap is not null");
 
             } else {
-                Log.i("Camara","bitmap is null");
                 System.out.println("bitmap is null");
             }
 
@@ -203,12 +206,10 @@ public class CameraScanDoc extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
 
-                Log.i("Camara","nolaguarde");
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.i("Camara","laguarde");
 
 
             }
@@ -233,6 +234,7 @@ public class CameraScanDoc extends AppCompatActivity {
                     intent.putExtra("URL",downloadUri.toString());
                     intent.putExtra("user",getIntent().getExtras().getString("user"));
                     setResult(RESULT_OK,intent);
+                    camera.release();
                     finish();
                 } else {
                     // Handle failures
@@ -251,17 +253,25 @@ public class CameraScanDoc extends AppCompatActivity {
         float sy = (float) frameLayout.getWidth()/bmp.getWidth();
         float sx = (float) frameLayout.getHeight()/bmp.getHeight();
         matrix.postRotate(90);
-        Log.i("Camara","Sy "+sx+"Sx: "+sy);
         matrix.postScale(sx,sy);
         bmp = Bitmap.createBitmap(bmp,offsetX, offsetY, bmp.getWidth(),bmp.getHeight(), matrix, true);
         bmpHeight = cuadro.getHeight();
         bmpWidth = cuadro.getWidth();
         offsetY = (int) ((viewHeight - iviewHeight)/2);
-        Log.i("Camaera","El Alto es:"+ bmpHeight+"El ancho es:"+bmpWidth+"OY:"+offsetY+"Yorigi"+bmp.getHeight());
         bmp = Bitmap.createBitmap(bmp,offsetX, offsetY,bmpWidth,bmpHeight);
 
        return bmp;
     }
-
+    private boolean checkCameraPermission() {
+        boolean resp = false;
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.CAMERA);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 225);
+        } else {
+            resp = true;
+        }
+        return resp;
+    }
 
     }

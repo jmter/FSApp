@@ -19,6 +19,8 @@ import com.jmt.fsapp.POJO.Menus;
 import com.jmt.fsapp.POJO.Personal;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ConstructorPreguntasPD  {
     private DatabaseReference mdataBase;
@@ -48,6 +50,12 @@ public class ConstructorPreguntasPD  {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         preguntas.add(ds.child("Pregunta").getValue().toString());
                         }
+                    Collections.sort(preguntas, new Comparator<String>() {
+                        @Override
+                        public int compare(String o1, String o2) {
+                            return o1.compareTo(o2);
+                        }
+                    });
                     adaptador.setPreguntas(preguntas);
                     partedeMaquinaRV.setAdapter(adaptador);
 

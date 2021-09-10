@@ -75,7 +75,11 @@ public class Equipos extends AppCompatActivity {
         }
         if(id == R.id.menuSalir){
             setResult(RESULT_CANCELED);
+            Intent intent = new Intent(activity,MainActivity.class);
+            startActivity(intent);
             finish();
+
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -122,7 +126,6 @@ public class Equipos extends AppCompatActivity {
     private interface FirebaseCallback{
         void onCallback(ArrayList<Equipo> equipos,ArrayList<ArrayList<String>> categorias);
     }
-
     private void setUpSpinner(){
         readData(new FirebaseCallback() {
             @Override

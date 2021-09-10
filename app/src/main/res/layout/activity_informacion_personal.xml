@@ -33,7 +33,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="Informacion Personal"
+                        android:text="Información Personal"
                         android:textSize="20dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +93,7 @@
                 <Spinner
                     android:id="@+id/usuariosSP"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="30dp"/>
 
             </LinearLayout>
             <LinearLayout
@@ -206,7 +206,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Telefono" />
+                    android:text="Teléfono" />
                 <EditText
                     android:id="@+id/eTtelefono"
                     android:layout_width="200dp"
@@ -240,7 +240,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Seccion" />
+                    android:text="Sección" />
                 <EditText
                     android:id="@+id/eTseccion"
                     android:layout_width="200dp"
@@ -257,7 +257,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Categoria" />
+                    android:text="Categoría" />
                 <EditText
                     android:id="@+id/eTCategoria"
                     android:layout_width="200dp"
@@ -309,7 +309,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="Cedula de Identidad"
+                    android:text="Cédula de Identidad"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -415,7 +415,7 @@
                     android:id="@+id/tVcategorialicenciadeconducir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Categoria"
+                    android:text="Categoría"
                     android:layout_marginTop="20dp"
                     app:layout_constraintStart_toStartOf="@+id/tVvencimientolicienciadeconducir"
                     app:layout_constraintTop_toBottomOf="@+id/tVvencimientolicienciadeconducir" />
@@ -465,7 +465,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="Carne de salud" />
+                    android:text="Carné de salud" />
                 <TextView
                     android:id="@+id/tVvencimientocarnedesalud"
                     android:layout_width="wrap_content"

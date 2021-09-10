@@ -91,7 +91,6 @@ public class AgregarEquipo extends AppCompatActivity {
                                         equipo.setCategoria(categoria.getSelectedItem().toString());
                                         equipo.setSubcategoria(subcategoria.getSelectedItem().toString());
                                         equipo.setPreid(obtenerProxID(equipos,categoria.getSelectedItem().toString(),subcategoria.getSelectedItem().toString()));
-                                        Log.i("Categoria","id"+equipo.getId());
                                         identity.setText(equipo.getId());
                                     }
 
@@ -150,7 +149,6 @@ public class AgregarEquipo extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("TAG","CLick");
                 Intent intent = new Intent (Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/");
                 startActivityForResult(intent.createChooser(intent,"Seleccione la aplicacion"),10);
@@ -194,7 +192,6 @@ public class AgregarEquipo extends AppCompatActivity {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    Log.i("Download",downloadUri.toString());
                     equipo.setFoto(downloadUri.toString());
                     databaseReference.child(equipo.getCategoria()).child(equipo.getSubcategoria()).child(equipo.getId()).setValue(equipo);
                 } else {
@@ -243,7 +240,14 @@ public class AgregarEquipo extends AppCompatActivity {
         void onCallback(ArrayList<Equipo> equipos, ArrayList<ArrayList<String>> subcategories);
     }
 
-    private int obtenerProxID(ArrayList<Equipo> equipos,String categorie,String subcategorie){
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(activity,Equipos.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private int obtenerProxID(ArrayList<Equipo> equipos, String categorie, String subcategorie){
         int max = 0;
         for(Equipo equipo:equipos){
             if(equipo.getCategoria().equals(categorie)  & equipo.getSubcategoria().equals(subcategorie) & equipo.getPreid() > max){

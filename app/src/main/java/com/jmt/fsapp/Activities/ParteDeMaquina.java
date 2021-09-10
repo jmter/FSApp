@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ import com.shitij.goyal.slidebutton.SwipeButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,11 +56,15 @@ public class ParteDeMaquina extends AppCompatActivity {
     private TextView tvFecha,tvEquipo,tvUsuario;
     private FirebaseAuth mAuth;
     private ArrayList<String> preguntas = new ArrayList();
-    private HashMap<Integer,String> respuestas=  new HashMap<Integer,String>();
+    private ArrayList<String> preguntasc;
+    private HashMap<String,String> respuestas=  new HashMap<String, String>();
     private RecyclerView partedeMaquinaRV;
     private String date;
     private String currentDateandTime;
-    private Button finalizar,restablecer;
+    private Button finalizar,restablecer,aceptar, cancelar;
+    private EditText comentario;
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +112,7 @@ public class ParteDeMaquina extends AppCompatActivity {
         restablecer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                partedeMaquinaRV.getAdapter().notifyDataSetChanged();
-                respuestas.clear();
+            restablecer();
             }
         });
         finalizar = findViewById(R.id.buttonFinalizar);
@@ -184,13 +191,16 @@ public class ParteDeMaquina extends AppCompatActivity {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
+            partedeMaquinaRV.getAdapter().notifyItemRemoved(position);
 
             switch (direction){
                 case ItemTouchHelper.RIGHT:
-                    respuestas.put(position,"Aceptable");
+                    respuestas.put(preguntas.get(position),"Aceptable");
+                    preguntas.remove(position);
                     break;
                 case ItemTouchHelper.LEFT:
-                    respuestas.put(position,"Rechazado");
+                    respuestas.put(preguntas.get(position),"Rechazado");
+                    preguntas.remove(position);
                     break;
 
             }
@@ -211,22 +221,17 @@ public class ParteDeMaquina extends AppCompatActivity {
 
     private void finalizarParte(){
         mdataBase = FirebaseDatabase.getInstance().getReference().child("Partes diarios").child(String.valueOf(equipo.getId())).child(dateCode(date));
-        if(preguntas.size()>respuestas.size()){
+        if(preguntas.size()>0){
             Toast.makeText(activity,"Debe completar todo el formualrio",Toast.LENGTH_LONG).show();
         } else {
             if(!evaluarParte(respuestas)){
-                // Todo lo referente a parte rechazado
-
-                Toast.makeText(activity,"Parte rechazado",Toast.LENGTH_LONG).show();
-                //Luego Guardo reporte
-                mdataBase.setValue(preguntaRespuesta());
-                Intent intent = new Intent(activity,MainActivity.class);
-                Toast.makeText(activity,"Parte diario finalizado con exito",Toast.LENGTH_LONG).show();
-                startActivity(intent);
-                finish();
+                //Todo lo referente a parte rechazado
+                crearPopupRechazo();
             } else{
                 //Aca guardo el reporte
-                mdataBase.setValue(preguntaRespuesta());
+                respuestas.put("Fecha",currentDateandTime);
+                respuestas.put("Usuario",personal.getUsuario());
+                mdataBase.setValue(respuestas);
                 Intent intent = new Intent(activity,MainActivity.class);
                 Toast.makeText(activity,"Parte diario finalizado con exito",Toast.LENGTH_LONG).show();
                 startActivity(intent);
@@ -234,21 +239,12 @@ public class ParteDeMaquina extends AppCompatActivity {
             }
         }
     }
-    private boolean evaluarParte(HashMap<Integer,String> respuestas){
+    private boolean evaluarParte(HashMap<String,String> respuestas){
         boolean test = true;
-        for(Map.Entry<Integer,String> entry : respuestas.entrySet()){
+        for(Map.Entry<String,String> entry : respuestas.entrySet()){
             if (entry.getValue().equals("Rechazado")){ test = false;}
         }
         return test;
-    }
-    private HashMap<String,String> preguntaRespuesta(){
-        HashMap<String,String> pyr = new HashMap<>();
-        for(int i=0; i < preguntas.size();++i){
-            pyr.put(preguntas.get(i),String.valueOf(respuestas.get(i)));
-        }
-        pyr.put("Fecha",currentDateandTime);
-        pyr.put("Usuario",personal.getUsuario());
-        return pyr;
     }
     private String dateCode(String date){
         String date1;
@@ -260,5 +256,59 @@ public class ParteDeMaquina extends AppCompatActivity {
         date2 = String.valueOf(12312359 - Integer.valueOf(date2));
         dateC = date1 + date2;
         return dateC;
+    }
+    private void crearPopupRechazo(){
+        dialogBuilder = new AlertDialog.Builder(activity);
+        final View popupRechazo  = getLayoutInflater().inflate(R.layout.popup_parte_rechazado,null);
+        dialogBuilder.setView(popupRechazo);
+        dialog = dialogBuilder.create();
+        comentario = popupRechazo.findViewById(R.id.comentario_pd);
+        cancelar = popupRechazo.findViewById(R.id.button_cancelar);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        aceptar = popupRechazo.findViewById(R.id.button_aceptar);
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!comentario.getText().toString().isEmpty()){
+                    respuestas.put("Fecha",currentDateandTime);
+                    respuestas.put("Usuario",personal.getUsuario());
+                    respuestas.put("comentario",comentario.getText().toString());
+                    Intent intent = new Intent(activity,MainActivity.class);
+                    mdataBase.setValue(respuestas);
+                    Toast.makeText(activity,"Parte diario finalizado con exito",Toast.LENGTH_LONG).show();
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Toast.makeText(activity,"Debe escribir un comentario para finalizar",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+        dialog.show();
+    }
+    private void restablecer(){
+        for(HashMap.Entry entry:respuestas.entrySet()){
+            preguntas.add(entry.getKey().toString());
+        }
+        Collections.sort(preguntas,new Comparator<String>(){
+
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        partedeMaquinaRV.getAdapter().notifyDataSetChanged();
+        respuestas.clear();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(activity,ParteDeMaquina.class);
+        startActivity(intent);
+        finish();
     }
 }

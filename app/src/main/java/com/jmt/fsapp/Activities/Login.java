@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
             etEmail.setText(user.getEmail());
             etEmail.setInputType(0);
             etPassword.setVisibility(View.GONE);
-            textView1.setText("Bienvenido!");
+            textView1.setText("¡Bienvenido!");
             textView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             btChUser.setVisibility(View.VISIBLE);
 
@@ -97,13 +97,11 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 iniciarMain();
 
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(Login.this, "Fallo de ingreso",
                                         Toast.LENGTH_SHORT).show();
 
