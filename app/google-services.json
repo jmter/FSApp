@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "775371724038",
-    "firebase_url": "https://fsapp-b233f-default-rtdb.firebaseio.com",
-    "project_id": "fsapp-b233f",
-    "storage_bucket": "fsapp-b233f.appspot.com"
+    "project_number": "167193854459",
+    "firebase_url": "https://fsapp-dev-9b8e6-default-rtdb.firebaseio.com",
+    "project_id": "fsapp-dev-9b8e6",
+    "storage_bucket": "fsapp-dev-9b8e6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:775371724038:android:c90e93f85a034efbecfa87",
+        "mobilesdk_app_id": "1:167193854459:android:8f0a6b6e192c8b8d338b5e",
         "android_client_info": {
           "package_name": "com.jmt.fsapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "775371724038-jajaibpe4tv0ur9lb85p27nb0l1itfpb.apps.googleusercontent.com",
+          "client_id": "167193854459-dcidgaciatq9ell5ol9kv5q1agcqv5re.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD0DpF9PAbuZG65ocx-d14irsfLuGoTEHs"
+          "current_key": "AIzaSyDNAtLoQtbhEwOkaYXKkm5Vfr1kxi2keRk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "775371724038-jajaibpe4tv0ur9lb85p27nb0l1itfpb.apps.googleusercontent.com",
+              "client_id": "167193854459-dcidgaciatq9ell5ol9kv5q1agcqv5re.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

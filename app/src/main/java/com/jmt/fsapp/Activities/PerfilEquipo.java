@@ -112,7 +112,7 @@ public class PerfilEquipo extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(activity,Equipos.class);
+        Intent intent = new Intent(activity,PerfilEquipo.class);
         startActivity(intent);
         finish();
     }

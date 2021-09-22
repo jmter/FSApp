@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activities.Login" >
+    <ImageView
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_fsa"/>
     <TextView
         android:id="@+id/texto1"
         android:layout_width="match_parent"
@@ -12,7 +19,7 @@
         android:ems="10"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="10dp"
         android:text="Ingrea Usuario y Contrasena" />
 
     <EditText
@@ -23,6 +30,7 @@
         android:ems="10"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
+        android:hint="Usuario"
         android:inputType="textEmailAddress"
         android:gravity="center_horizontal" />
 
@@ -30,6 +38,7 @@
 
         android:id="@+id/password"
         android:textAlignment="center"
+        android:hint="Contraseña"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -44,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:text="Ingresar" />
     <Button
         android:id="@+id/chuserBT"

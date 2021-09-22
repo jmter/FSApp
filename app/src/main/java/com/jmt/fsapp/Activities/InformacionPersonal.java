@@ -276,6 +276,7 @@ public class InformacionPersonal extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     for (DataSnapshot sd : ds.getChildren()){
                         if (sd.child("usuario").getValue().equals(user.getEmail())) {
+                            Log.i("Usuario","El usuario es"+user.getEmail()+"Su acces es "+Integer.parseInt(sd.child("acceso").getValue().toString()));
                             access = Integer.parseInt(sd.child("acceso").getValue().toString());
                         }
                     }
@@ -554,5 +555,12 @@ public class InformacionPersonal extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(activity,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -194,9 +195,11 @@ public class AgregarEquipo extends AppCompatActivity {
                     Uri downloadUri = task.getResult();
                     equipo.setFoto(downloadUri.toString());
                     databaseReference.child(equipo.getCategoria()).child(equipo.getSubcategoria()).child(equipo.getId()).setValue(equipo);
+                    Toast.makeText(activity,"El equipo fue agregado correctamente",Toast.LENGTH_LONG).show();
                 } else {
                     // Handle failures
                     // ...
+                    Toast.makeText(activity,"No fue posible agregar el equipo",Toast.LENGTH_LONG).show();
                 }
             }
         });
