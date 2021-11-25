@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.ParteDeMaquina"></activity>
+        <activity android:name=".Activities.ReciboDeSueldoViewer"></activity>
+        <activity android:name=".Activities.MisRecibosDeSueldo" />
+        <activity android:name=".Activities.ParteDeMaquina" />
         <activity android:name=".Activities.PerfilEquipo" />
         <activity android:name=".Activities.AgregarEquipo" />
         <activity android:name=".Activities.CameraScanDoc" />

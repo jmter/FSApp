@@ -188,7 +188,9 @@ public class InformacionPersonal extends AppCompatActivity {
             editarInfo();
         }
         if(id == R.id.itemmenurecibo){
-
+            Intent intent = new Intent(activity,MisRecibosDeSueldo.class);
+            startActivity(intent);
+            finish();
         }
         if(id == R.id.menuAgregarUsuario){
             usuarioNuevo();
@@ -276,14 +278,12 @@ public class InformacionPersonal extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     for (DataSnapshot sd : ds.getChildren()){
                         if (sd.child("usuario").getValue().equals(user.getEmail())) {
-                            Log.i("Usuario","El usuario es"+user.getEmail()+"Su acces es "+Integer.parseInt(sd.child("acceso").getValue().toString()));
                             access = Integer.parseInt(sd.child("acceso").getValue().toString());
                         }
                     }
                 }
                 for(DataSnapshot ds : snapshot.getChildren()){
                     for(DataSnapshot sd : ds.getChildren()){
-                    Log.i("Accses",sd.child("usuario").getValue().toString()+" == "+user.getEmail());
                     if((access == 3) || (sd.child("usuario").getValue().toString().equals(user.getEmail()))) {
 
                         Personal personal = new Personal();
@@ -505,7 +505,9 @@ public class InformacionPersonal extends AppCompatActivity {
         personalReload.put("nombre",personal.getNombre());
         personalReload.put("apellido",personal.getApellido());
         personalReload.put("domicilio",personal.getDomicilio());
-        personalReload.put("nacimiento",personal.getNacimiento());
+        personalReload.put("nacimiento/dia",personal.getNacimiento().dia);
+        personalReload.put("nacimiento/mes",personal.getNacimiento().mes);
+        personalReload.put("nacimiento/ano",personal.getNacimiento().ano);
         personalReload.put("telefono",personal.getTelefono());
         personalReload.put("categoria",personal.getCategoria());
         personalReload.put("credencial",personal.getCredencial());
