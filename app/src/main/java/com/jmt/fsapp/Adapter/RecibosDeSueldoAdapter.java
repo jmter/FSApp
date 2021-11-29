@@ -1,15 +1,19 @@
 package com.jmt.fsapp.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jmt.fsapp.Activities.ReciboDeSueldoViewer;
 import com.jmt.fsapp.POJO.ReciboDeSueldo;
 import com.jmt.fsapp.R;
 
@@ -40,7 +44,7 @@ public class RecibosDeSueldoAdapter extends RecyclerView.Adapter<RecibosDeSueldo
     @Override
     public void onBindViewHolder(@NonNull final AdapterViewHolder adapterViewHolder, int position) {
         final ReciboDeSueldo recibo = recibos.get(position);
-        String textRecibo = recibo.getTipo() + " - " + recibo.getMes();
+        String textRecibo = recibo.getTipo() + " - " + recibo.getMes()+ " - " + recibo.getAno();
         adapterViewHolder.recibotext.setText(textRecibo);
         if(recibo.getFirma().equals("true")){
             adapterViewHolder.estadofirma.setImageResource(R.mipmap.firmadoico);
@@ -49,6 +53,15 @@ public class RecibosDeSueldoAdapter extends RecyclerView.Adapter<RecibosDeSueldo
             adapterViewHolder.estadofirma.setImageResource(R.mipmap.sinfirmarico);
             adapterViewHolder.estadofirmatext.setText("Sin Firmar");
         };
+        adapterViewHolder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity, ReciboDeSueldoViewer.class);
+                i.putExtra("recibo", recibo);
+                activity.startActivity(i);
+                activity.finish();
+            }
+        });
 
     }
     @Override
@@ -61,6 +74,7 @@ public class RecibosDeSueldoAdapter extends RecyclerView.Adapter<RecibosDeSueldo
         private TextView recibotext;
         private ImageView estadofirma;
         private TextView estadofirmatext;
+        private ConstraintLayout layout;
 
 
         public AdapterViewHolder(@NonNull View itemView) {
@@ -68,6 +82,7 @@ public class RecibosDeSueldoAdapter extends RecyclerView.Adapter<RecibosDeSueldo
             recibotext  = (TextView) itemView.findViewById(R.id.recibosueldotipo);
             estadofirma = (ImageView) itemView.findViewById(R.id.signedicon);
             estadofirmatext = (TextView) itemView.findViewById(R.id.signedicontext);
+            layout = (ConstraintLayout) itemView.findViewById(R.id.layoutCVRS);
         }
     }
 

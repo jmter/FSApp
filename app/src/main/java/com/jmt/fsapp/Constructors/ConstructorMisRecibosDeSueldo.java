@@ -1,6 +1,7 @@
 package com.jmt.fsapp.Constructors;
 
 import android.app.Activity;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.jmt.fsapp.Adapter.RecibosDeSueldoAdapter;
 import com.jmt.fsapp.POJO.ReciboDeSueldo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -46,10 +48,13 @@ public class ConstructorMisRecibosDeSueldo {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     recibos.clear();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        ReciboDeSueldo recibo = new ReciboDeSueldo(ds.child("fecha").getValue().toString(),ds.child("firma").getValue().toString(),ds.child("mes").getValue().toString(),ds.child("tipo").getValue().toString(),ds.child("url").getValue().toString());
-                        recibos.add(recibo);
+                    for (DataSnapshot sd : snapshot.getChildren()) {
+                        for (DataSnapshot ds : sd.getChildren()) {
+                            ReciboDeSueldo recibo = new ReciboDeSueldo(ds.child("fecha").getValue().toString(), ds.child("firma").getValue().toString(), ds.child("mes").getValue().toString(), ds.child("ano").getValue().toString(), ds.child("tipo").getValue().toString(), ds.child("url").getValue().toString(),ds.child("cid").getValue().toString());
+                            recibos.add(recibo);
                         }
+                    }
+                    Collections.sort(recibos,Collections.<ReciboDeSueldo>reverseOrder());
                     adaptador.setRecibos(recibos);
                     recibosDeSueldoRV.setAdapter(adaptador);
 

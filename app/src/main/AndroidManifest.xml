@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jmt.fsapp">
+    package="com.jmt.fsapp" >
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -14,8 +14,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activities.ReciboDeSueldoViewer"></activity>
+        android:theme="@style/AppTheme" >
+        <activity android:name=".Activities.SignActivity" >
+        </activity>
+        <activity android:name=".Activities.ReciboDeSueldoViewer" />
         <activity android:name=".Activities.MisRecibosDeSueldo" />
         <activity android:name=".Activities.ParteDeMaquina" />
         <activity android:name=".Activities.PerfilEquipo" />
@@ -25,7 +27,7 @@
         <activity android:name=".Activities.Equipos" />
         <activity
             android:name=".Activities.Login"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,6 +37,13 @@
         <activity
             android:name=".Activities.MainActivity"
             android:noHistory="true" />
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

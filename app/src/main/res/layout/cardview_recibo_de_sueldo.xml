@@ -9,7 +9,7 @@
     app:cardCornerRadius="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutCV"
+        android:id="@+id/layoutCVRS"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -6,6 +6,7 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 -keepattributes Signature
 -keepclassmembers class com.jmt.fsapp.** { *; }
+-keep class com.shockwave.**
 
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
