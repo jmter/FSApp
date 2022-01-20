@@ -13,16 +13,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,11 +29,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jmt.fsapp.Activities.Equipos.Equipos;
 import com.jmt.fsapp.Constructors.ConstructorPreguntasPD;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.POJO.Personal;
 import com.jmt.fsapp.R;
-import com.shitij.goyal.slidebutton.SwipeButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +41,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ParteDeMaquina extends AppCompatActivity {

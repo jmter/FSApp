@@ -1,7 +1,6 @@
 package com.jmt.fsapp.Constructors;
 
 import android.app.Activity;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,12 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jmt.fsapp.Activities.InformacionPersonal;
-import com.jmt.fsapp.Adapter.MenusAdapter;
 import com.jmt.fsapp.Adapter.PreguntasPDAdapter;
-import com.jmt.fsapp.POJO.Equipo;
-import com.jmt.fsapp.POJO.Menus;
-import com.jmt.fsapp.POJO.Personal;
 
 import java.util.ArrayList;
 import java.util.Collections;

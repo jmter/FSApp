@@ -1,4 +1,4 @@
-package com.jmt.fsapp.Activities;
+package com.jmt.fsapp.Activities.Equipos;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,13 +8,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jmt.fsapp.Activities.MainActivity;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.R;
 
@@ -64,7 +62,7 @@ public class PerfilEquipo extends AppCompatActivity {
             Toast.makeText(activity, "Esta funcion aun no fue desarrollada", Toast.LENGTH_SHORT).show();
         }
         if(id == R.id.menuSalir){
-            Intent intent = new Intent(activity,MainActivity.class);
+            Intent intent = new Intent(activity, MainActivity.class);
             startActivity(intent);
             finish();
         }

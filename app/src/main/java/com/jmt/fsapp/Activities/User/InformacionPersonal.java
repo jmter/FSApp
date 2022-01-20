@@ -1,4 +1,4 @@
-package com.jmt.fsapp.Activities;
+package com.jmt.fsapp.Activities.User;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jmt.fsapp.Activities.MainActivity;
 import com.jmt.fsapp.POJO.Personal;
 import com.jmt.fsapp.R;
 import com.jmt.fsapp.datatype.Fecha;
@@ -188,7 +188,7 @@ public class InformacionPersonal extends AppCompatActivity {
             editarInfo();
         }
         if(id == R.id.itemmenurecibo){
-            Intent intent = new Intent(activity,MisRecibosDeSueldo.class);
+            Intent intent = new Intent(activity, MisRecibosDeSueldo.class);
             startActivity(intent);
             finish();
         }
@@ -196,7 +196,7 @@ public class InformacionPersonal extends AppCompatActivity {
             usuarioNuevo();
         }
         if(id == R.id.menuitemSalir){
-            Intent intent = new Intent(activity,MainActivity.class);
+            Intent intent = new Intent(activity, MainActivity.class);
             startActivity(intent);
             finish();
 

@@ -1,4 +1,4 @@
-package com.jmt.fsapp.Activities;
+package com.jmt.fsapp.Activities.User;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,16 +30,12 @@ import com.itextpdf.text.pdf.PdfIndirectObject;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.jmt.fsapp.Activities.Login.SignActivity;
 import com.jmt.fsapp.POJO.ReciboDeSueldo;
 import com.jmt.fsapp.R;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-
-import static com.itextpdf.text.html.HtmlTags.IMG;
 
 public class ReciboDeSueldoViewer extends AppCompatActivity {
     private Activity activity = this;
@@ -70,7 +65,7 @@ public class ReciboDeSueldoViewer extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(activity,MisRecibosDeSueldo.class);
+        Intent intent = new Intent(activity, MisRecibosDeSueldo.class);
         startActivity(intent);
         finish();
     }
@@ -81,14 +76,19 @@ public class ReciboDeSueldoViewer extends AppCompatActivity {
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menuoverflow_recibos_de_sueldo,menu);
+        if(recibo.getFirma().equals("true")) {
+
+        }
         return true;
     }
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.itemfirmarrecibo){
-            Intent intent = new Intent(activity,SignActivity.class);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent,ASK_QUESTION_PROFILE);
+
+                Intent intent = new Intent(activity, SignActivity.class);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, ASK_QUESTION_PROFILE);
+
         }
         if(id == R.id.itemdescargarrecibo){
 
@@ -187,8 +187,8 @@ public class ReciboDeSueldoViewer extends AppCompatActivity {
         stream.put(new PdfName("ITXT_SpecialId"), new PdfName("123456789"));
         PdfIndirectObject ref = stamper.getWriter().addToBody(stream);
         image.setDirectReference(ref.getIndirectReference());
-        image.scaleToFit(150,150);
-        image.setAbsolutePosition(210, 265);
+        image.scaleToFit(90,90);
+        image.setAbsolutePosition(250, 275);
         PdfContentByte over = stamper.getOverContent(1);
         over.addImage(image);
         stamper.close();

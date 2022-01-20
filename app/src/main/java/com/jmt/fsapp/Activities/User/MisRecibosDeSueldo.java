@@ -1,4 +1,4 @@
-package com.jmt.fsapp.Activities;
+package com.jmt.fsapp.Activities.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jmt.fsapp.Activities.User.InformacionPersonal;
 import com.jmt.fsapp.Constructors.ConstructorMisRecibosDeSueldo;
-import com.jmt.fsapp.Constructors.ConstructorPreguntasPD;
 import com.jmt.fsapp.POJO.Personal;
 import com.jmt.fsapp.POJO.ReciboDeSueldo;
 import com.jmt.fsapp.R;
@@ -57,7 +57,7 @@ public class MisRecibosDeSueldo extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(activity,InformacionPersonal.class);
+        Intent intent = new Intent(activity, InformacionPersonal.class);
         startActivity(intent);
         finish();
     }

@@ -1,4 +1,4 @@
-package com.jmt.fsapp.Activities;
+package com.jmt.fsapp.Activities.Equipos;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jmt.fsapp.Activities.MainActivity;
 import com.jmt.fsapp.Adapter.EquiposAdapter;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.R;
@@ -69,13 +70,13 @@ public class Equipos extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.menuEditarMaquina){
-            Intent intent = new Intent(activity,AgregarEquipo.class);
+            Intent intent = new Intent(activity, AgregarEquipo.class);
             startActivity(intent);
             finish();
         }
         if(id == R.id.menuSalir){
             setResult(RESULT_CANCELED);
-            Intent intent = new Intent(activity,MainActivity.class);
+            Intent intent = new Intent(activity, MainActivity.class);
             startActivity(intent);
             finish();
 

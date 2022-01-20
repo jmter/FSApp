@@ -1,4 +1,4 @@
-package com.jmt.fsapp.Activities;
+package com.jmt.fsapp.Activities.Equipos;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,7 +12,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +34,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.jmt.fsapp.Activities.Equipos.Equipos;
+import com.jmt.fsapp.Activities.MainActivity;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.R;
 
@@ -125,7 +126,7 @@ public class AgregarEquipo extends AppCompatActivity {
 
         }
         if(id == R.id.menuSalir){
-            Intent intent = new Intent(activity,Equipos.class);
+            Intent intent = new Intent(activity, Equipos.class);
             startActivity(intent);
             finish();
         }
@@ -203,7 +204,7 @@ public class AgregarEquipo extends AppCompatActivity {
                 }
             }
         });
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
 
