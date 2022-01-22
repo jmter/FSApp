@@ -14,9 +14,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activities.Combustible.MenuEstacionesDeServicio"></activity>
-        <activity android:name=".Activities.Login.SignActivity"></activity>
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <activity android:name=".Activities.Combustible.AutorizarSolicitudes"></activity>
+        <activity android:name=".Activities.Combustible.SolicitudesFianlizadas" />
+        <activity android:name=".Activities.Combustible.SolicitudesPendientes" />
+        <activity android:name=".Activities.Combustible.NuevaSolicitud" />
+        <activity android:name=".Activities.Combustible.MenuEstacionesDeServicio" />
+        <activity android:name=".Activities.Login.SignActivity" />
         <activity android:name=".Activities.User.ReciboDeSueldoViewer" />
         <activity android:name=".Activities.User.MisRecibosDeSueldo" />
         <activity android:name=".Activities.ParteDeMaquina" />
