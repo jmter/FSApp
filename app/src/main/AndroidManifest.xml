@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <activity android:name=".Activities.Combustible.AutorizarSolicitudes"></activity>
+        <activity android:name=".Activities.Combustible.SolicitudEstacion"></activity>
+        <activity android:name=".Activities.EstacionesDeServicio" />
+        <activity android:name=".Activities.Combustible.AutorizarSolicitudes" />
         <activity android:name=".Activities.Combustible.SolicitudesFianlizadas" />
         <activity android:name=".Activities.Combustible.SolicitudesPendientes" />
         <activity android:name=".Activities.Combustible.NuevaSolicitud" />

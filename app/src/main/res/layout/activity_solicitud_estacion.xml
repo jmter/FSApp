@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.Combustible.SolicitudEstacion">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llFinalizado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/accepted_big_icon"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#008F39"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:text="Autorizado para cargar combustible"/>
+                <TextView
+                    android:id="@+id/textViewCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:text="Codigo:"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llNoFinalizado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sin Finalizar"
+                    android:textStyle="bold"
+                    android:textColor="#FF0000"
+                    android:gravity="center"
+                    android:textSize="40dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Hora solicitud"
+                    android:enabled="false"
+                    android:inputType="none"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    tools:layout_editor_absoluteX="4dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/horasolicitudTI"
+                        android:inputType="none|textNoSuggestions"
+                        android:focusable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Estacion"
+                    android:enabled="false"
+                    android:inputType="none"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    tools:layout_editor_absoluteX="4dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/estacionTI"
+                        android:inputType="none|textNoSuggestions"
+                        android:focusable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Usuario"
+                    android:enabled="false"
+                    android:inputType="none"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    tools:layout_editor_absoluteX="4dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputUsuario"
+                        android:inputType="none|textNoSuggestions"
+                        android:focusable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Equipo"
+                    android:enabled="false"
+                    android:inputType="none"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    tools:layout_editor_absoluteX="4dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/equipoTI"
+                        android:inputType="none|textNoSuggestions"
+                        android:focusable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Producto"
+                    android:enabled="false"
+                    android:inputType="none"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    tools:layout_editor_absoluteX="4dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/productoTI"
+                        android:inputType="none|textNoSuggestions"
+                        android:focusable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/cantidadTIL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Cantidad"
+                    android:inputType="number"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    tools:layout_editor_absoluteX="4dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/cantidadTIET"
+                        android:inputType="number|textNoSuggestions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/horaskmTI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Horas/Km"
+                        android:layout_weight="0.5"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                        tools:layout_editor_absoluteX="4dp">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/horaskm"
+                            android:inputType="number|textNoSuggestions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:checked="false"
+                        android:layout_weight="0.5"
+                        android:id="@+id/horaskmCheck"
+                        android:text="No tiene / No funciona"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/finalizarBTT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Finalizar"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

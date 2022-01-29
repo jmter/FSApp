@@ -307,4 +307,5 @@ public class ParteDeMaquina extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

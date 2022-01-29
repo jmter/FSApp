@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activities.Combustible.AutorizarSolicitudes">
+    tools:context=".Activities.EstacionesDeServicio">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Autorizar Solicitudes"
+                android:text="Estaciones de Servicio"
                 android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +40,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/autorizarSolicitudesRV"
+        android:id="@+id/listadoestacionesRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
