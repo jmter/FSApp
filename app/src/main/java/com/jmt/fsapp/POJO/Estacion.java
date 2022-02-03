@@ -4,6 +4,7 @@ public class Estacion {
     private String adress,city,id,location,mail,name,phone,picture,state;
 
     public Estacion() {
+        this.mail = "jmter@outlook.com";
     }
 
     public String getAdress() {

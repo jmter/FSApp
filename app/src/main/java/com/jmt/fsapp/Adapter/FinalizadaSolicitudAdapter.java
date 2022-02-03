@@ -50,7 +50,7 @@ public class FinalizadaSolicitudAdapter extends RecyclerView.Adapter<FinalizadaS
     public void onBindViewHolder(@NonNull final AdapterViewHolder adapterViewHolder, int position) {
         final OrdenCompraEstacionServicio solicitud = solicitudes.get(position);
 
-
+        adapterViewHolder.closeIV.setVisibility(View.GONE);
         String equipoEtiqueta = "("+solicitud.getEquipo().getId()+") "+solicitud.getEquipo().getMarca()+" "+ solicitud.getEquipo().getModelo();
         adapterViewHolder.equipoTV.setText(equipoEtiqueta);
         adapterViewHolder.productoTV.setText(solicitud.getProducto());
@@ -81,7 +81,7 @@ public class FinalizadaSolicitudAdapter extends RecyclerView.Adapter<FinalizadaS
     public static class AdapterViewHolder extends RecyclerView.ViewHolder{
 
         private TextView estacionTV,equipoTV,productoTV,tituloTV,fechayhora;
-        private ImageView estadoIV;
+        private ImageView estadoIV,closeIV;
         private ConstraintLayout cardviewPendienteSolicitud;
 
 
@@ -94,6 +94,7 @@ public class FinalizadaSolicitudAdapter extends RecyclerView.Adapter<FinalizadaS
             productoTV = (TextView) itemView.findViewById(R.id.productoTV);
             estacionTV = (TextView) itemView.findViewById(R.id.estacionTV);
             estadoIV = (ImageView) itemView.findViewById(R.id.estadoIV);
+            closeIV = (ImageView) itemView.findViewById(R.id.closeIV);
         }
     }
 }

@@ -1,7 +1,13 @@
 package com.jmt.fsapp.POJO;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jmt.fsapp.datatype.Cid;
 import com.jmt.fsapp.datatype.Csalud;
 import com.jmt.fsapp.datatype.Fecha;
@@ -283,5 +289,34 @@ public class Personal {
             todosLosNumeros.add(Integer.parseInt(encuentrador.group()));
         }
         return todosLosNumeros;
+    }
+
+    public void readUser(final FirebaseCallback firebaseCallback){
+        final DatabaseReference userDbRef = FirebaseDatabase.getInstance().getReference().child("Usuarios");
+        final Personal userPersonal = new Personal();
+        userDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds:snapshot.getChildren()){
+                    for(DataSnapshot sd:ds.getChildren()){
+
+                        if(sd.child("usuario").getValue().toString().equals(usuario)){
+                            userPersonal.setNombre(sd.child("nombre").getValue().toString());
+                            userPersonal.setApellido(sd.child("apellido").getValue().toString());
+                            firebaseCallback.OnCallback(userPersonal);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public interface FirebaseCallback{
+        void OnCallback(Personal personal);
     }
 }

@@ -61,6 +61,8 @@ public class ConstructorFinalizadaSolicitud {
                             estacion.setCity(sd.child("estacion").child("city").getValue().toString());
                             estacion.setId(sd.child("estacion").child("id").getValue().toString());
                             estacion.setPicture(sd.child("estacion").child("picture").getValue().toString());
+                            estacion.setMail(sd.child("estacion").child("mail").getValue().toString());
+                            solicitud.setOperarioName(sd.child("operarioName").getValue().toString());
                             solicitud.setEstado(sd.child("estado").getValue().toString());
                             solicitud.setFechayhorasolicitud(sd.child(("fechayhorasolicitud")).getValue().toString());
                             solicitud.setKey(sd.getKey());

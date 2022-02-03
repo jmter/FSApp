@@ -28,6 +28,7 @@ import com.jmt.fsapp.Activities.MainActivity;
 import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.POJO.Estacion;
 import com.jmt.fsapp.POJO.OrdenCompraEstacionServicio;
+import com.jmt.fsapp.POJO.Personal;
 import com.jmt.fsapp.R;
 
 import java.text.SimpleDateFormat;
@@ -46,6 +47,8 @@ public class NuevaSolicitud extends AppCompatActivity {
     private Estacion estacion;
     private Activity activity= this;
     private Button nuevaSolicitud;
+    private String userMail;
+    private String userFullName;
     private OrdenCompraEstacionServicio ordenCompraEstacionServicio;
 
 
@@ -54,6 +57,7 @@ public class NuevaSolicitud extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_solicitud);
         mAuth = FirebaseAuth.getInstance();
+        userMail = mAuth.getCurrentUser().getEmail();
         equipo = new Equipo();
         estacion = new Estacion();
         ordenCompraEstacionServicio = new OrdenCompraEstacionServicio();
@@ -126,7 +130,16 @@ public class NuevaSolicitud extends AppCompatActivity {
     }
 
     private void setUsuario(){
-        usuarioET.setText(mAuth.getCurrentUser().getEmail());
+        usuarioET.setText(userMail);
+        Personal user = new Personal();
+        user.setUsuario(userMail);
+        user.readUser(new Personal.FirebaseCallback() {
+            @Override
+            public void OnCallback(Personal personal) {
+                userFullName = personal.getNombre() + " " + personal.getApellido();
+            }
+        });
+
     }
     private void setFechayHora(){
         Date currentTime = Calendar.getInstance().getTime();
@@ -182,6 +195,7 @@ public class NuevaSolicitud extends AppCompatActivity {
     private void saveSolicitud(){
         if(checkEmpty()) {
             ordenCompraEstacionServicio.NuevaSolicitud(mAuth.getCurrentUser().getEmail(), fechayhoraET.getText().toString(), equipo, "Pendiente autorizacion", estacion, productoET.getText().toString());
+            ordenCompraEstacionServicio.setOperarioName(userFullName);
             String user = mAuth.getCurrentUser().getEmail().replace(".", "");
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Ordenes Estaciones de Servicio").child("Pendiente autorizacion").child(user);
             mDatabase = mDatabase.push();

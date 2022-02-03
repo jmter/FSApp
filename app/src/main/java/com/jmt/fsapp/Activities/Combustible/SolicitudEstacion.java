@@ -29,7 +29,6 @@ import com.jmt.fsapp.POJO.Equipo;
 import com.jmt.fsapp.POJO.Estacion;
 import com.jmt.fsapp.POJO.OrdenCompraEstacionServicio;
 import com.jmt.fsapp.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,6 +107,11 @@ public class SolicitudEstacion extends AppCompatActivity {
                     //sendEmail();
                     setHoraCompleto();
                     showSolicitudFin();
+                    if(solicitud.getEstado().equals("Autorizado")){
+                        solicitud.setCodigo(calcCode());
+                        String condeText = "Codigo: "+ solicitud.getCodigo();
+                        textViewCode.setText(condeText);
+                    }
                     saveSolicitud(solicitud);
                     deleteSolicitudFromAut();
                 }
@@ -135,12 +139,22 @@ public class SolicitudEstacion extends AppCompatActivity {
                     estacion.setCity(sd.child("estacion").child("city").getValue().toString());
                     estacion.setId(sd.child("estacion").child("id").getValue().toString());
                     estacion.setPicture(sd.child("estacion").child("picture").getValue().toString());
+                    estacion.setMail(sd.child("estacion").child("mail").getValue().toString());
+                    solicitud.setOperarioName(sd.child("operarioName").getValue().toString());
                     solicitud.setFechayhorasolicitud(sd.child(("fechayhorasolicitud")).getValue().toString());
                     solicitud.setFechayhoraautorizacion(sd.child(("fechayhoraautorizacion")).getValue().toString());
                     solicitud.setMaximoAutorizado(sd.child(("maximoAutorizado")).getValue().toString());
                     solicitud.setKey(sd.getKey());
                     solicitud.setEstacion(estacion);
                     solicitud.setEquipo(equipo);
+                    solicitud.setEstado(sd.child(("estado")).getValue().toString());
+                    Log.i("Code",solicitud.getEstado());
+                    if(solicitud.getEstado().equals("CompletadasTrans") || solicitud.getEstado().equals("Completada")){
+                        Log.i("Code","Exito");
+                        solicitud.setCodigo(sd.child(("codigo")).getValue().toString());
+                        String condeText = "Codigo: "+ solicitud.getCodigo();
+                        textViewCode.setText(condeText);
+                    }
                     cantidadTIET.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -194,7 +208,7 @@ public class SolicitudEstacion extends AppCompatActivity {
             valid = false;
         }else{
             if (Float.parseFloat(cant) > Float.parseFloat(solicitud.getMaximoAutorizado())) {
-                cantidadTIL.setError("La cantidad maxsima autorizada es: " + solicitud.getMaximoAutorizado());
+                cantidadTIL.setError("La cantidad maxima autorizada es: " + solicitud.getMaximoAutorizado());
                 valid = false;
             }
         }
@@ -250,9 +264,6 @@ public class SolicitudEstacion extends AppCompatActivity {
         horaskm.setFocusable(false);
         horaskm.setInputType(0);
         finalizarBTT.setVisibility(View.GONE);
-        String condeText = "Codigo: "+ calcCode();
-        textViewCode.setText(condeText);
-
     }
     public void saveSolicitud(OrdenCompraEstacionServicio soli){
         String user = mAuth.getCurrentUser().getEmail().replace(".", "");
@@ -295,7 +306,7 @@ public class SolicitudEstacion extends AppCompatActivity {
         code = code + character;
         acum = acum * 37;
         code = code + acum;
-        Log.i("Code",code);
+        solicitud.setCodigo(code);
         return code;
     }
 }

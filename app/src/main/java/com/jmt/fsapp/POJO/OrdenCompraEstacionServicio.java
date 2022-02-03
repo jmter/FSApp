@@ -2,6 +2,7 @@ package com.jmt.fsapp.POJO;
 
 public class OrdenCompraEstacionServicio {
     private String operario;
+    private String operarioName;
     private String fechayhorasolicitud;
     private String producto;
     private String estado;
@@ -49,6 +50,14 @@ public class OrdenCompraEstacionServicio {
 
     public void setFechayhorasolicitud(String fechayhorasolicitud) {
         this.fechayhorasolicitud = fechayhorasolicitud;
+    }
+
+    public String getOperarioName() {
+        return operarioName;
+    }
+
+    public void setOperarioName(String operarioName) {
+        this.operarioName = operarioName;
     }
 
     public String getKey() {

@@ -57,7 +57,7 @@ public class ConstructorEstaciones {
                             estacion.setId(ds.child("id").getValue().toString());
                             estacion.setName(ds.child("name").getValue().toString());
                             estacion.setPicture(ds.child("picture").getValue().toString());
-                            Log.i("estation",estacion.getName());
+                            estacion.setMail(ds.child("mail").getValue().toString());
                             estaciones.add(estacion);
                         }
                         }

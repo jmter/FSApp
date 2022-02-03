@@ -87,6 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:hint="Equipo"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
@@ -103,6 +105,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:hint="Estacion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
